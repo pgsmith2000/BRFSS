@@ -21,12 +21,12 @@ Overview goes here
 
 ```{r dataprep}
 # Data preperation and documentation
-source("100_read in BRFSS XPT_2018.R", echo = TRUE)
-source("105_Keep vars_2018.R", echo = TRUE)
+source("100_read in BRFSS XPT.R", echo = TRUE)
+source("105_Keep vars.R", echo = TRUE)
 source("110_Apply exclusions.R", echo = TRUE)
 source("115_Make alcohol variables.R", echo = TRUE)
 source("120_Make outcome variables.R", echo = TRUE)
-source("125_Make categorical variables_2018.R", echo = TRUE)
+source("125_Make categorical variables.R", echo = TRUE)
 source("190_Write out analytic.R", echo = TRUE)
 
 ```
@@ -57,8 +57,8 @@ source("225_Table 1 means and sds.R", echo = TRUE)
 ```{r SignificanceTesting}
 # Significance Testing for All Table 1 Variables
 source("230_Table 1 chisq.R", echo = TRUE)
-source("235_Table 1 ANOVAS_2018.R", echo = TRUE)
-source("240_Table 1 ttests_2018.R", echo = TRUE)
+source("235_Table 1 ANOVAS.R", echo = TRUE)
+source("240_Table 1 ttests.R", echo = TRUE)
 
 ```
 
