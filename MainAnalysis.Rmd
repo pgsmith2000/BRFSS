@@ -1,0 +1,65 @@
+---
+title: "Descriptive Analysis of BRFSS Data - 2018 Veteran Data"
+author: "Paul G. Smith"
+date: "10/23/2019"
+output:
+  md_document:
+    variant: markdown_github
+# output: html_document
+
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## R Markdown
+
+Overview goes here
+
+### Step 1: Data Preparation
+
+```{r dataprep}
+# Data preperation and documentation
+source("100_read in BRFSS XPT_2018.R", echo = TRUE)
+source("105_Keep vars_2018.R", echo = TRUE)
+source("110_Apply exclusions.R", echo = TRUE)
+source("115_Make alcohol variables.R", echo = TRUE)
+source("120_Make outcome variables.R", echo = TRUE)
+source("125_Make categorical variables_2018.R", echo = TRUE)
+source("190_Write out analytic.R", echo = TRUE)
+
+```
+
+### Step 2: Check Main Variables
+
+```{r checkvars}
+
+# Check main variables
+source("200_Check asthma.R", echo = TRUE)
+source("205_Check sleep duration.R", echo = TRUE)
+
+```
+### Step 3: Calculate Frequencies, Means, and Standard Deviations
+
+```{r FreqsMeansSDs}
+
+# Produce data to fill in blank Table 1
+source("210_Table 1 overall frequencies.R", echo = TRUE)
+source("215_Table 1 Asthma frequencies.R", echo = TRUE)
+source("220_Table 1 No asthma frequencies.R", echo = TRUE)
+source("225_Table 1 means and sds.R", echo = TRUE)
+
+```
+
+### Step 4: Significance Testing: Chi Squares, ANOVAs, and T-Tests
+
+```{r SignificanceTesting}
+# Significance Testing for All Table 1 Variables
+source("230_Table 1 chisq.R", echo = TRUE)
+source("235_Table 1 ANOVAS_2018.R", echo = TRUE)
+source("240_Table 1 ttests_2018.R", echo = TRUE)
+
+```
+
+End of Document
