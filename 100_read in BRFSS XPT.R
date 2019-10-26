@@ -1,5 +1,4 @@
 # load foreign package
-
 library(foreign)
 
 # read in data to R

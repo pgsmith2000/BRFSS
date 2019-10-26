@@ -19,6 +19,7 @@ OutputTable <- ddply(analytic,~GroupVar,summarise,mean=mean(SLEPTIM2),sd=sd(SLEP
 write.csv(OutputTable, file = paste0("./data/means/", CSVTable, ".csv"))
 })
 
+SumTbl (AstGrpSum, analytic$ASTHMA4, "Ast")
 SumTbl (AlcGrpSum, analytic$ALCGRP, "Alc")
 SumTbl (AgeGrpSum, analytic$X_AGE_G, "Age")
 SumTbl (SexSum, analytic$SEX, "Sex")

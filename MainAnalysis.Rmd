@@ -3,8 +3,8 @@ title: "Descriptive Analysis of BRFSS Data - 2018 Veteran Data"
 author: "Paul G. Smith"
 date: "10/23/2019"
 output:
-  md_document:
-    variant: markdown_github
+  github_document:
+    html_preview: false
 # output: html_document
 
 ---
@@ -19,14 +19,40 @@ Overview goes here
 
 ### Step 1: Data Preparation
 
-```{r dataprep}
-# Data preperation and documentation
+Load the "Foreign" library with tools needed to import the SAS version of the BRFSS dataset from the CDC. Then look at the variable names (colnames).
+
+
+```{r readdata}
+# Read in the inital downloaded BRFSS dataset in SAS XPT format
 source("100_read in BRFSS XPT.R", echo = TRUE)
+```
+
+Then select a subset of varables (17) to keep for these analyses. And reduce the data set by elimnating cases that did not provide valid responses to select questions. Before starting data reduction, look at the number of records imported from the SAS file. There is data on **437,436 cases or rows (nrow) in the initial dataset**.
+
+Next apply exclusion to remove (1) non veterans, (2) cases with no drinking data in ALCDAY5, (3) cases with no sleep data in SLEPTIM1, and (4) no valid asthma data. There are **52,984 cases (rows) in the final data set**.
+
+![Data Reduction Flowchart](./visuals/datareduction.png "Data Reduction Flowchart")
+
+```{r keepdataapplyexclusion}
+# Keep data on all cases (rows) but only keep 17 variables
 source("105_Keep vars.R", echo = TRUE)
 source("110_Apply exclusions.R", echo = TRUE)
+```
+Next, create new variables from the base variables for the alcohol variable (ALCGRP: No drinks reported, monthly drinker, weekly drinker), and outcome (SLEPTIM2: recoded SLEPTIM1).  These changes are documented in the updated data dictionary found [**download data dictionary here [XLSX - 33KB]**](documentation/Data_Dictionary_with_Confounders.xlsx)
+
+```{r makenewvariables}
 source("115_Make alcohol variables.R", echo = TRUE)
 source("120_Make outcome variables.R", echo = TRUE)
+```
+Create the categorical variables, that will be used to support regression analyses once descriptive analysis is complete.
+
+```{r makecategoricalvariables}
 source("125_Make categorical variables.R", echo = TRUE)
+```
+And finally, write out a CSV version of the dataset for remaining analyses,
+so that the entire BFRSS dataset does not have to be processed for remaining analyses.
+
+```{r writedatasetcsv}
 source("190_Write out analytic.R", echo = TRUE)
 
 ```

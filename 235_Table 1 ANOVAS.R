@@ -16,6 +16,7 @@ summary(TblName)})
 
 # call macro
 ANOVATest (ALCGRP, AlcANOVA)
+ANOVATest (ASTHMA4, AstANOVA)
 ANOVATest (X_AGE_G, AgeANOVA)
 ANOVATest (SEX, SexANOVA)
 ANOVATest (X_HISPANC, HispANOVA)

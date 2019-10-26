@@ -1,12 +1,20 @@
-R Markdown
-----------
+Descriptive Analysis of BRFSS Data - 2018 Veteran Data
+================
+Paul G. Smith
+10/23/2019
+
+## R Markdown
 
 Overview goes here
 
 ### Step 1: Data Preparation
 
+Load the “Foreign” library with tools needed to import the SAS version
+of the BRFSS dataset from the CDC. Then look at the variable names
+(colnames).
+
 ``` r
-# Data preperation and documentation
+# Read in the inital downloaded BRFSS dataset in SAS XPT format
 source("100_read in BRFSS XPT.R", echo = TRUE)
 ```
 
@@ -72,7 +80,22 @@ source("100_read in BRFSS XPT.R", echo = TRUE)
     ## [266] "X_MAM5022" "X_RFPAP34" "X_RFPSA22" "X_RFBLDS3" "X_COL10YR"
     ## [271] "X_HFOB3YR" "X_FS5YR"   "X_FOBTFS"  "X_CRCREC"  "X_AIDTST3"
 
+Then select a subset of varables (17) to keep for these analyses. And
+reduce the data set by elimnating cases that did not provide valid
+responses to select questions. Before starting data reduction, look at
+the number of records imported from the SAS file. There is data on
+**437,436 cases or rows (nrow) in the initial dataset**.
+
+Next apply exclusion to remove (1) non veterans, (2) cases with no
+drinking data in ALCDAY5, (3) cases with no sleep data in SLEPTIM1, and
+(4) no valid asthma data. There are **52,984 cases (rows) in the final
+data set**.
+
+![Data Reduction Flowchart](./visuals/datareduction.png
+"Data Reduction Flowchart")
+
 ``` r
+# Keep data on all cases (rows) but only keep 17 variables
 source("105_Keep vars.R", echo = TRUE)
 ```
 
@@ -120,6 +143,12 @@ source("110_Apply exclusions.R", echo = TRUE)
     ## 
     ## > nrow(BRFSS_f)
     ## [1] 52984
+
+Next, create new variables from the base variables for the alcohol
+variable (ALCGRP: No drinks reported, monthly drinker, weekly drinker),
+and outcome (SLEPTIM2: recoded SLEPTIM1). These changes are documented
+in the updated data dictionary found [**download data dictionary here
+\[XLSX - 33KB\]**](documentation/Data_Dictionary_with_Confounders.xlsx)
 
 ``` r
 source("115_Make alcohol variables.R", echo = TRUE)
@@ -254,6 +283,9 @@ source("120_Make outcome variables.R", echo = TRUE)
     ##         0     1
     ##   1     0  5298
     ##   2 47686     0
+
+Create the categorical variables, that will be used to support
+regression analyses once descriptive analysis is complete.
 
 ``` r
 source("125_Make categorical variables.R", echo = TRUE)
@@ -787,6 +819,10 @@ source("125_Make categorical variables.R", echo = TRUE)
     ## > nrow(BRFSS_i)
     ## [1] 52984
 
+And finally, write out a CSV version of the dataset for remaining
+analyses, so that the entire BFRSS dataset does not have to be processed
+for remaining analyses.
+
 ``` r
 source("190_Write out analytic.R", echo = TRUE)
 ```
@@ -846,20 +882,20 @@ source("205_Check sleep duration.R", echo = TRUE)
     ## +     xlab = "Class SLEPTIM2", ylab = "Frequency", xlim = c(0, 
     ## +         15), ylim = c(0,  .... [TRUNCATED]
 
-![](MainAnalysis_files/figure-markdown_github/checkvars-1.png)
+![](MainAnalysis_files/figure-gfm/checkvars-1.png)<!-- -->
 
     ## 
     ## > boxplot(analytic$SLEPTIM2, main = "Box Plot of SLEPTIM2", 
     ## +     xlab = "Total File", ylab = "SLEPTIM2")
 
-![](MainAnalysis_files/figure-markdown_github/checkvars-2.png)
+![](MainAnalysis_files/figure-gfm/checkvars-2.png)<!-- -->
 
     ## 
     ## > boxplot(SLEPTIM2 ~ ALCGRP, data = analytic, main = "Box Plot of SLEPTIM2 by ALCGRP", 
     ## +     xlab = "ALCGRP", ylab = "SLEPTIM2")
 
-![](MainAnalysis_files/figure-markdown_github/checkvars-3.png) \#\#\#
-Step 3: Calculate Frequencies, Means, and Standard Deviations
+![](MainAnalysis_files/figure-gfm/checkvars-3.png)<!-- --> \#\#\# Step
+3: Calculate Frequencies, Means, and Standard Deviations
 
 ``` r
 # Produce data to fill in blank Table 1
