@@ -17,7 +17,7 @@ Model2 = lm(SLEPTIM2 ~ DRKMONTHLY + DRKWEEKLY + MALE + AGE2 + AGE3 + AGE4 + AGE5
 summary(Model2) 
 
 Tidy_Model2 <- tidy(Model2)
-write.csv(Tidy_Model2, file = "./data/LinearRegressionModel2.csv")
+write.csv(Tidy_Model2, file = "./data/models/LinearRegressionModel2.csv")
 
 
 

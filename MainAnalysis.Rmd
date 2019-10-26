@@ -1,7 +1,7 @@
 ---
 title: "Descriptive Analysis of BRFSS Data - 2018 Veteran Data"
 author: "Paul G. Smith"
-date: "10/23/2019"
+date: "10/25/2019"
 output:
   github_document:
     html_preview: false
@@ -13,7 +13,7 @@ output:
 knitr::opts_chunk$set(echo = TRUE)
 ```
 
-## R Markdown
+## Descriptive Analysis
 
 Overview goes here
 
@@ -87,5 +87,13 @@ source("235_Table 1 ANOVAS.R", echo = TRUE)
 source("240_Table 1 ttests.R", echo = TRUE)
 
 ```
+## Regression Analysis
 
+```{r Regression}
+# Significance Testing for All Table 1 Variables
+source("245_Diagnostic Plots.R", echo = TRUE)
+source("250_Models 1 and 2 linear regression.R", echo = TRUE)
+source("255_Linear regression models.R", echo = TRUE)
+
+```
 End of Document
