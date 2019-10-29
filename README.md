@@ -77,7 +77,7 @@ This analysis makes use of the 2018 BRFSS core data set. Key
 documentation from the CDC, used to document, understand, and interpret
 these data include the following:
 
-  - [**2018 BRFSS Overview CDC pdf icon\[PDF – 298
+  - [**2018 BRFSS Overview CDC \[PDF – 298
     KB\]**](https://www.cdc.gov/brfss/annual_data/2018/pdf/overview-2018-508.pdf)
     Provides information on the background, design, data collection and
     processing, and the statistical and analytical issues for the
@@ -92,12 +92,12 @@ these data include the following:
   - [**Calculated Variables in Data Files CDC \[PDF – 1.91
     MB\]**](https://www.cdc.gov/brfss/annual_data/2018/pdf/2018-calculated-variables-version4-508.pdf)
 
-  - [**2018 Summary Data Quality Report with Response Rates CDC pdf
-    icon\[PDF – 2.19
+  - [**2018 Summary Data Quality Report with Response Rates CDC \[PDF
+    – 2.19
     MB\]**](https://www.cdc.gov/brfss/annual_data/2018/pdf/2018-sdqr-508.pdf)
 
   - [**Complex Sampling Weights and Preparing Module Data for Analysis
-    CDC pdf icon\[PDF – 564
+    CDC \[PDF – 564
     KB\]**](https://www.cdc.gov/brfss/annual_data/2018/pdf/Complex-Smple-Weights-Prep-Module-Data-Analysis-2018-508.pdf)
     An explanation of the need to use complex sampling weights and
     instructions for preparing a module data set for analysis.
@@ -131,20 +131,20 @@ behavior leads to greater likelihood of athsma in veterans.**
 
 ## Products Used and Produced in this Sample Descriptive Analysis
 
-1.  BRFSS LLCP 2018 Codebook - this is the CDC codebook for the 2018
+1.  **BRFSS LLCP 2018 Codebook** - this is the CDC codebook for the 2018
     survey downloaded from the CDC (see link above).
-2.  Data Dictionary - for this analysis I developed a data dictionary to
-    document the coding of the CDC variables, and recoding required for
-    additional variables that I added to this analyis.
-3.  BRFSS Dataset - the dataset used in this analysis was downloaded
+2.  **Data Dictionary** - for this analysis I developed a data
+    dictionary to document the coding of the CDC variables, and recoding
+    required for additional variables that I added to this analyis.
+3.  **BRFSS Dataset** - the dataset used in this analysis was downloaded
     from the link above in SAS EPT format. It was stored in the /data
     subdirectory. However, the data set is large and could not be stored
     in this github repository. If the reader chooses to download and run
     the R code for this analysis. The dataset will have to be downloaded
     and stored in the correct subfolder.
-4.  Descriptive Analysis in R
-5.  Final Table 1 for Categorical Outcome Variable
-6.  Final Table 1 for Continuous Outcome Variable
+4.  **Descriptive Analysis in R**
+5.  **Final Table 1 for Categorical Outcome Variable**
+6.  **Final Table 1 for Continuous Outcome Variable**
 
 ## Data Import and Prepartion in R
 
