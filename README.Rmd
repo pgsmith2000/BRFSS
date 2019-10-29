@@ -1,0 +1,167 @@
+---
+title: "Sample Descriptive Analysis Using Publicly Available Healthcare Data"
+author: "Paul G. Smith"
+date: "10/29/2019"
+output: 
+  github_document:
+    toc: true
+    html_preview: false
+---
+
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+# Sample Descriptive Analysis Using Publicly Available Healthcare Data
+
+## Purpose of this Analysis
+
+## Hypotheses Used as Foundation for Descriptive Analysis
+### Hypothesis to Demonstrate Continuous Outcome Variable
+### Hypothesis to Demonstrate Categorical Outcome Variable
+
+## Products Used and Produced in this Sample Descriptive Analysis
+
+### BRFSS Codebook for 2018
+### Data Dictionary
+### BRFSS Dataset
+### Population Subset, Exposure Variables, Outcome Variables, and Covariate Used in this Descriptive Analysis
+### Descriptive Analysis in R
+### Final Table 1 for Categorical Outcome Variable
+### Final Table 1 for Continuous Outcome Variable
+
+
+## Data Import and Prepartion in R
+
+To build my initial dataset for these analyses, I selected and downloaded the BRFF data in SAS XPT format. This format is more compact and also contains additional variables calculated by the CDC. For more information, please see my [**Data Dictionary with Confounders [XLSX - 33KB]**](documentation/Data_Dictionary_with_Confounders.xlsx) for this project and note the values in the source field and values (BRFSS, SAS).
+
+```{r importData, echo=TRUE, message=TRUE, warning=TRUE}
+# Read in the inital downloaded BRFSS dataset in SAS XPT format
+source("100_read in BRFSS XPT.R", echo = TRUE)
+```
+
+## Data Reduction in R
+
+Then select a subset of varables (17) to keep for these analyses. And reduce the data set by elimnating cases that did not provide valid responses to select questions. Before starting data reduction, look at the number of records imported from the SAS file. There is data on **437,436 cases or rows (nrow) in the initial dataset**.
+
+Next apply exclusion to remove (1) non veterans, (2) cases with no drinking data in ALCDAY5, (3) cases with no sleep data in SLEPTIM1, and (4) no valid asthma data. There are **52,984 cases (rows) in the final data set**.
+
+![Data Reduction Flowchart](./visuals/datareduction.png "Data Reduction Flowchart")
+
+```{r keepDataApplyExclusionx, echo=TRUE, message=TRUE, warning=TRUE}
+# Keep data on all cases (rows) but only keep 17 variables
+source("105_Keep vars.R", echo = TRUE)
+source("110_Apply exclusions.R", echo = TRUE)
+```
+Note in the code results above that the data file at this point has been reduced.
+
+- FROM initial set: **437,436 records and 275 variables**
+- TO BRFSS_f: **52,984 records and 17 variables**
+
+## Create Additional Variables
+
+Next, additional variables were created and coded in R for the population subset (veterans), the exposure variables, and outcome variables. 
+
+- The variable used to subset the veteran population (VETERAN3) exists in the BRFSS dataset. This variable was used in the data reduction code above.
+
+- Three new outcome variables (ALCGRP, DRKWEEKLY, and DRKMONTHLY) were derived from one in the original BRFSS dataset (ALCDAY5). 
+
+Recall, that we are demonstrating techniques and procedures in R for both a categorical and continuous variable using two separate hypotheses. 
+
+- As a result, there are two main outcome variables (categorical - ASTHMA3, continuous - SLEPTIM1).
+
+Potential confounding variables were also identified, created, and coded. These variables were selected and derived after a review of the BRFSS codebook.
+
+- 15 potential cofounders were selected from the initial BRFSS data set.
+
+These variables were created in three distinct steps in the R code.
+
+1. First, the alcohol (exposure variables) were created.
+2. Next, the outcome variables were created.
+3. Finally, all of the categorical variables were created
+
+R **table** commands were used to verify proper derivation and coding of the variables.
+
+```{r makeNewVariables, echo=TRUE, message=TRUE, warning=TRUE}
+source("115_Make alcohol variables.R", echo = TRUE)
+source("120_Make outcome variables.R", echo = TRUE)
+source("125_Make categorical variables.R", echo = TRUE)
+```
+At this point the dataset has been finalized for the Descriptive Analysis. To facilitate these subsequent analyses, the dataset is saved in CSV format. The subsequent analyses, will only need to load this final version of the data. 
+
+```{r saveData, echo=TRUE, message=TRUE, warning=TRUE}
+source("190_Write out analytic.R", echo = TRUE)
+```
+
+## Initial Check of Key Exposure and Outcome Variables in R
+
+```{r ckOutcomeVariables, echo=TRUE, message=TRUE, warning=TRUE}
+source("200_Check asthma.R", echo = TRUE)
+source("205_Check sleep duration.R", echo = TRUE)
+
+```
+
+## Calculation of Frequencies (Categorical Variables)
+
+Next, frequencies for the exposure and categorical outcome variables were produced in R code. 
+
+These calculations were processed in three distinct steps in the R code.
+
+1. First, the overall frequencies for the exposure and confounders were run.
+2. Next, the frequencies for the categorical outcomes ASTHMA were run.
+3. Finally, the frequencies for the categorical outcome NOASTHMA were run.
+
+Macros were created in the R code to produce CVS files for most of the frequency outcome data. These CSV files aided in the final assembly of an MS EXCEL Table 1. 
+
+Note: These CSV files appear in separate subdirectories within the main data directory **(./data)**.
+
+```{r calculateFrequences, echo=TRUE, message=TRUE, warning=TRUE}
+source("210_Table 1 overall frequencies.R", echo = TRUE)
+source("215_Table 1 asthma frequencies.R", echo = TRUE)
+source("220_Table 1 no asthma frequencies.R", echo = TRUE)
+
+```
+
+## Calculation of Means, and Standard Deviations (Continuous Variables)
+
+Means and Standard Deviations were calculated for all continuous variables,
+
+```{r calculateMeansSDs, echo=TRUE, message=TRUE, warning=TRUE}
+source("225_Table 1 means and sds.R", echo = TRUE)
+
+```
+
+## Chi Square Significance Testing of Categorical Variables With More Than Two Values
+
+Significance Testing for the categorical variables (categorical exposures and outcomes). Chi square testing was required for cases where the categorical exposure variable had more than two values.
+
+```{r calculateChiSquares, echo=TRUE, message=TRUE, warning=TRUE}
+source("230_Table 1 chi squares.R", echo = TRUE)
+
+```
+
+## T Tests for Categorical Variables with Only Two Values
+
+Significance Testing for the categorical variables (categorical exposures and outcomes). T-tests were required for cases where the categorical exposure variable had only two values.
+
+```{r calculateTtests, echo=TRUE, message=TRUE, warning=TRUE}
+source("235_Table 1 ttests.R", echo = TRUE)
+
+```
+
+## ANOVA Testing of Continuous Variables
+
+Significance Testing for the continuous variables (categorical exposures and outcomes).
+
+```{r calculateANOVAs, echo=TRUE, message=TRUE, warning=TRUE}
+source("240_Table 1 ANOVAs.R", echo = TRUE)
+
+```
+
+
+## Final Table 1 for Categorical Hypothesis
+
+## Final Table 1 for Continuous Hypothesis
+
+
