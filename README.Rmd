@@ -130,6 +130,10 @@ At this point the dataset has been finalized for the Descriptive Analysis. To fa
 source("190_Write out analytic.R", echo = TRUE)
 ```
 
+Note: the final data set includes 62 variables (columns) and 52,984 cases (rows).
+
+This dataset will be used in all subsequent analyses.
+
 ## Initial Check of Key Exposure and Outcome Variables in R
 
 ```{r ckOutcomeVariables, echo=TRUE, message=TRUE, warning=TRUE}

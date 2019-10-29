@@ -1029,6 +1029,11 @@ source("190_Write out analytic.R", echo = TRUE)
     ## [56] "INC7"       "BMICAT"     "UNDWT"      "OVWT"       "OBESE"     
     ## [61] "EXERANY3"   "NOEXER"
 
+Note: the final data set includes 62 variables (columns) and 52,984
+cases (rows).
+
+This dataset will be used in all subsequent analyses.
+
 ## Initial Check of Key Exposure and Outcome Variables in R
 
 ``` r
