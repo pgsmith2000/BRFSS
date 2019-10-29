@@ -17,9 +17,45 @@ knitr::opts_chunk$set(echo = TRUE)
 
 ## Purpose of this Analysis
 
+The purpose of this analysis is to demonstrate the decisions, documentation, and R code necessary to perform a **Descriptive Analysis** in R using a publically and freely available dataset.
+
+The initial dataset selected is the **Behavioral Risk Factor Surveillance System (BRFSS) Survey for 2018.** This is the most recent results dataset available at the time of this analysis.
+
+## What is the Behavioral Risk Factor Surveillance System (BRFSS): 
+
+The BRFSS is the nation's premier system of health-related telephone surveys that collect state data about U.S. residents regarding their health-related risk behaviors, chronic health conditions, and use of preventive services.
+
+The [**BRFSS Survey**](https://www.cdc.gov/brfss/data_documentation/index.htm) ia a large anonymous phone  survey conducted **every year** through a state and federal collaboration and with [**NHANES**](https://www.cdc.gov/nchs/nhanes/index.htm) represents the main US risk factor Surveillance. 
+
+**The objective of the BRFSSis to collect uniform state-specific data on health risk behaviors, chronic diseases and conditions, access to health care, and use of preventive health services related to the leading causes of death and disability in the United States.** Factors assessed by the BRFSS include tobacco use, health care coverage, HIV/AIDS knowledge or prevention, physical activity, and fruit and vegetable consumption. Data are collected from a random sample of adults (one per household) through a telephone survey.
+
+This analysis makes use of the 2018 BRFSS core data set. Key documentation from the CDC, used to document, understand, and interpret these data include the following:
+
+- [**2018 BRFSS Overview CDC pdf icon[PDF – 298 KB]**](https://www.cdc.gov/brfss/annual_data/2018/pdf/overview-2018-508.pdf) 
+Provides information on the background, design, data collection and processing, and the statistical and analytical issues for the combined landline and cell phone data set.
+
+- [**2018 BRFSS Codebook CDC pdf icon[PDF – 10 MB]**](https://www.cdc.gov/brfss/annual_data/2018/pdf/codebook18_llcp-v2-508.pdf) 
+Codebook for the file showing variable name, location, and frequency of values for all reporting areas combined for the combined landline and cell phone data set.
+
+- [**Calculated Variables in Data Files CDC pdf icon[PDF – 1.91 MB]**](https://www.cdc.gov/brfss/annual_data/2018/pdf/2018-calculated-variables-version4-508.pdf)
+
+- [**2018 Summary Data Quality Report with Response Rates CDC pdf icon[PDF – 2.19 MB]**](https://www.cdc.gov/brfss/annual_data/2018/pdf/2018-sdqr-508.pdf)
+
+- [**Complex Sampling Weights and Preparing Module Data for Analysis CDC pdf icon[PDF – 564 KB]**](https://www.cdc.gov/brfss/annual_data/2018/pdf/Complex-Smple-Weights-Prep-Module-Data-Analysis-2018-508.pdf)
+An explanation of the need to use complex sampling weights and instructions for preparing a module data set for analysis.
+
+
 ## Hypotheses Used as Foundation for Descriptive Analysis
+
+Two hypotheses were formulated to demonstate using R to conduct a descriptive analyis using both a categorical and continuous outcome variable. A descriptive analysis typically takes a single dataset and provides the documentation and description of a set of variables, usually in preparation for a subsequent analysis of that data set (the actual hypothesis testing). A hypothesis is not actually **required** for the descriptive analyis, but in this case the reason for a hypothesis is to aid in the selection of a subset of variables from the BRFSS survey. The dataset includes information on 274 variables collected for over 400,000 individuals. A hypothesis in this case allows us to develop a **smaller dataset containing only those selection, exposure, and potential confounding variables**.
+
 ### Hypothesis to Demonstrate Continuous Outcome Variable
+
+To demonstrate a descriptive analysis with a categorical outcome variable the following hypothesis was tested: **Increased drinking behavior leads to reduced sleep time in veterans.**
+
 ### Hypothesis to Demonstrate Categorical Outcome Variable
+
+To demonstrate a descriptive analysis with a categorical outcome variable the following hypothesis was tested: **Increased drinking behavior leads to greater likelihood of athsma in veterans.**
 
 ## Products Used and Produced in this Sample Descriptive Analysis
 
@@ -30,7 +66,6 @@ knitr::opts_chunk$set(echo = TRUE)
 ### Descriptive Analysis in R
 ### Final Table 1 for Categorical Outcome Variable
 ### Final Table 1 for Continuous Outcome Variable
-
 
 ## Data Import and Prepartion in R
 
