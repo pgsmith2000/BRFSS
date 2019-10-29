@@ -16,17 +16,6 @@ Paul G. Smith
             Variable](#hypothesis-to-demonstrate-categorical-outcome-variable)
       - [Products Used and Produced in this Sample Descriptive
         Analysis](#products-used-and-produced-in-this-sample-descriptive-analysis)
-          - [BRFSS Codebook for 2018](#brfss-codebook-for-2018)
-          - [Data Dictionary](#data-dictionary)
-          - [BRFSS Dataset](#brfss-dataset)
-          - [Population Subset, Exposure Variables, Outcome Variables,
-            and Covariate Used in this Descriptive
-            Analysis](#population-subset-exposure-variables-outcome-variables-and-covariate-used-in-this-descriptive-analysis)
-          - [Descriptive Analysis in R](#descriptive-analysis-in-r)
-          - [Final Table 1 for Categorical Outcome
-            Variable](#final-table-1-for-categorical-outcome-variable)
-          - [Final Table 1 for Continuous Outcome
-            Variable](#final-table-1-for-continuous-outcome-variable)
       - [Data Import and Prepartion in
         R](#data-import-and-prepartion-in-r)
       - [Data Reduction in R](#data-reduction-in-r)
@@ -94,13 +83,13 @@ these data include the following:
     processing, and the statistical and analytical issues for the
     combined landline and cell phone data set.
 
-  - [**2018 BRFSS Codebook CDC pdf icon\[PDF – 10
+  - [**BRFSS LLCP 2018 Codebook \[PDF – 10
     MB\]**](https://www.cdc.gov/brfss/annual_data/2018/pdf/codebook18_llcp-v2-508.pdf)
     Codebook for the file showing variable name, location, and frequency
     of values for all reporting areas combined for the combined landline
     and cell phone data set.
 
-  - [**Calculated Variables in Data Files CDC pdf icon\[PDF – 1.91
+  - [**Calculated Variables in Data Files CDC \[PDF – 1.91
     MB\]**](https://www.cdc.gov/brfss/annual_data/2018/pdf/2018-calculated-variables-version4-508.pdf)
 
   - [**2018 Summary Data Quality Report with Response Rates CDC pdf
@@ -142,19 +131,20 @@ behavior leads to greater likelihood of athsma in veterans.**
 
 ## Products Used and Produced in this Sample Descriptive Analysis
 
-### BRFSS Codebook for 2018
-
-### Data Dictionary
-
-### BRFSS Dataset
-
-### Population Subset, Exposure Variables, Outcome Variables, and Covariate Used in this Descriptive Analysis
-
-### Descriptive Analysis in R
-
-### Final Table 1 for Categorical Outcome Variable
-
-### Final Table 1 for Continuous Outcome Variable
+1.  BRFSS LLCP 2018 Codebook - this is the CDC codebook for the 2018
+    survey downloaded from the CDC (see link above).
+2.  Data Dictionary - for this analysis I developed a data dictionary to
+    document the coding of the CDC variables, and recoding required for
+    additional variables that I added to this analyis.
+3.  BRFSS Dataset - the dataset used in this analysis was downloaded
+    from the link above in SAS EPT format. It was stored in the /data
+    subdirectory. However, the data set is large and could not be stored
+    in this github repository. If the reader chooses to download and run
+    the R code for this analysis. The dataset will have to be downloaded
+    and stored in the correct subfolder.
+4.  Descriptive Analysis in R
+5.  Final Table 1 for Categorical Outcome Variable
+6.  Final Table 1 for Continuous Outcome Variable
 
 ## Data Import and Prepartion in R
 
