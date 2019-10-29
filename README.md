@@ -64,14 +64,14 @@ and federal collaboration and with
 [**NHANES**](https://www.cdc.gov/nchs/nhanes/index.htm) represents the
 main US risk factor Surveillance.
 
-**The objective of the BRFSSis to collect uniform state-specific data on
-health risk behaviors, chronic diseases and conditions, access to health
-care, and use of preventive health services related to the leading
-causes of death and disability in the United States.** Factors assessed
-by the BRFSS include tobacco use, health care coverage, HIV/AIDS
-knowledge or prevention, physical activity, and fruit and vegetable
-consumption. Data are collected from a random sample of adults (one per
-household) through a telephone survey.
+**The objective of the BRFSS is to collect uniform state-specific data
+on health risk behaviors, chronic diseases and conditions, access to
+health care, and use of preventive health services related to the
+leading causes of death and disability in the United States.** Factors
+assessed by the BRFSS include tobacco use, health care coverage,
+HIV/AIDS knowledge or prevention, physical activity, and fruit and
+vegetable consumption. Data are collected from a random sample of adults
+(one per household) through a telephone survey.
 
 This analysis makes use of the 2018 BRFSS core data set. Key
 documentation from the CDC, used to document, understand, and interpret
@@ -112,10 +112,10 @@ usually in preparation for a subsequent analysis of that data set (the
 actual hypothesis testing). A hypothesis is not actually **required**
 for the descriptive analyis, but in this case the reason for a
 hypothesis is to aid in the selection of a subset of variables from the
-BRFSS survey. The dataset includes information on 274 variables
-collected for over 400,000 individuals. A hypothesis in this case allows
-us to develop a **smaller dataset containing only those selection,
-exposure, and potential confounding variables**.
+BRFSS survey. The initial dataset includes information on **274
+variables collected for over 400,000 individuals.** A hypothesis in this
+case allows us to develop a **smaller dataset containing only those
+selection, exposure, and potential confounding variables**.
 
 ### Hypothesis to Demonstrate Continuous Outcome Variable
 
@@ -230,10 +230,13 @@ responses to select questions. Before starting data reduction, look at
 the number of records imported from the SAS file. There is data on
 **437,436 cases or rows (nrow) in the initial dataset**.
 
-Next apply exclusion to remove (1) non veterans, (2) cases with no
+Next apply exclusions to remove (1) non veterans, (2) cases with no
 drinking data in ALCDAY5, (3) cases with no sleep data in SLEPTIM1, and
 (4) no valid asthma data. There are **52,984 cases (rows) in the final
 data set**.
+
+The figure below illustrates the data reduction process used in this
+analysis (with the number of cases/rows for each step).
 
 ![Data Reduction Flowchart](./visuals/datareduction.png
 "Data Reduction Flowchart")
@@ -1007,6 +1010,24 @@ source("190_Write out analytic.R", echo = TRUE)
 
     ## 
     ## > write.csv(BRFSS_i, file = "./data/analytic.csv")
+    ## 
+    ## > dim(BRFSS_i)
+    ## [1] 52984    62
+    ## 
+    ## > colnames(BRFSS_i)
+    ##  [1] "VETERAN3"   "ALCDAY5"    "SLEPTIM1"   "ASTHMA3"    "X_AGE_G"   
+    ##  [6] "SMOKE100"   "SMOKDAY2"   "SEX1"       "X_HISPANC"  "X_MRACE1"  
+    ## [11] "MARITAL"    "GENHLTH"    "HLTHPLN1"   "EDUCA"      "INCOME2"   
+    ## [16] "X_BMI5CAT"  "EXERANY2"   "ALCGRP"     "DRKMONTHLY" "DRKWEEKLY" 
+    ## [21] "SLEPTIM2"   "ASTHMA4"    "AGE2"       "AGE3"       "AGE4"      
+    ## [26] "AGE5"       "AGE6"       "NEVERSMK"   "SMOKGRP"    "SMOKER"    
+    ## [31] "SEX"        "MALE"       "HISPANIC"   "RACEGRP"    "BLACK"     
+    ## [36] "ASIAN"      "OTHRACE"    "MARGRP"     "NEVERMAR"   "FORMERMAR" 
+    ## [41] "GENHLTH2"   "FAIRHLTH"   "POORHLTH"   "HLTHPLN2"   "NOPLAN"    
+    ## [46] "EDGROUP"    "LOWED"      "SOMECOLL"   "INCOME3"    "INC1"      
+    ## [51] "INC2"       "INC3"       "INC4"       "INC5"       "INC6"      
+    ## [56] "INC7"       "BMICAT"     "UNDWT"      "OVWT"       "OBESE"     
+    ## [61] "EXERANY3"   "NOEXER"
 
 ## Initial Check of Key Exposure and Outcome Variables in R
 

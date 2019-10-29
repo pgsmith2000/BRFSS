@@ -27,7 +27,7 @@ The BRFSS is the nation's premier system of health-related telephone surveys tha
 
 The [**BRFSS Survey**](https://www.cdc.gov/brfss/data_documentation/index.htm) ia a large anonymous phone  survey conducted **every year** through a state and federal collaboration and with [**NHANES**](https://www.cdc.gov/nchs/nhanes/index.htm) represents the main US risk factor Surveillance. 
 
-**The objective of the BRFSSis to collect uniform state-specific data on health risk behaviors, chronic diseases and conditions, access to health care, and use of preventive health services related to the leading causes of death and disability in the United States.** Factors assessed by the BRFSS include tobacco use, health care coverage, HIV/AIDS knowledge or prevention, physical activity, and fruit and vegetable consumption. Data are collected from a random sample of adults (one per household) through a telephone survey.
+**The objective of the BRFSS is to collect uniform state-specific data on health risk behaviors, chronic diseases and conditions, access to health care, and use of preventive health services related to the leading causes of death and disability in the United States.** Factors assessed by the BRFSS include tobacco use, health care coverage, HIV/AIDS knowledge or prevention, physical activity, and fruit and vegetable consumption. Data are collected from a random sample of adults (one per household) through a telephone survey.
 
 This analysis makes use of the 2018 BRFSS core data set. Key documentation from the CDC, used to document, understand, and interpret these data include the following:
 
@@ -47,7 +47,7 @@ An explanation of the need to use complex sampling weights and instructions for 
 
 ## Hypotheses Used as Foundation for Descriptive Analysis
 
-Two hypotheses were formulated to demonstate using R to conduct a descriptive analyis using both a categorical and continuous outcome variable. A descriptive analysis typically takes a single dataset and provides the documentation and description of a set of variables, usually in preparation for a subsequent analysis of that data set (the actual hypothesis testing). A hypothesis is not actually **required** for the descriptive analyis, but in this case the reason for a hypothesis is to aid in the selection of a subset of variables from the BRFSS survey. The dataset includes information on 274 variables collected for over 400,000 individuals. A hypothesis in this case allows us to develop a **smaller dataset containing only those selection, exposure, and potential confounding variables**.
+Two hypotheses were formulated to demonstate using R to conduct a descriptive analyis using both a categorical and continuous outcome variable. A descriptive analysis typically takes a single dataset and provides the documentation and description of a set of variables, usually in preparation for a subsequent analysis of that data set (the actual hypothesis testing). A hypothesis is not actually **required** for the descriptive analyis, but in this case the reason for a hypothesis is to aid in the selection of a subset of variables from the BRFSS survey. The initial dataset includes information on **274 variables collected for over 400,000 individuals.** A hypothesis in this case allows us to develop a **smaller dataset containing only those selection, exposure, and potential confounding variables**.
 
 ### Hypothesis to Demonstrate Continuous Outcome Variable
 
@@ -79,7 +79,9 @@ source("100_read in BRFSS XPT.R", echo = TRUE)
 
 Then select a subset of varables (17) to keep for these analyses. And reduce the data set by elimnating cases that did not provide valid responses to select questions. Before starting data reduction, look at the number of records imported from the SAS file. There is data on **437,436 cases or rows (nrow) in the initial dataset**.
 
-Next apply exclusion to remove (1) non veterans, (2) cases with no drinking data in ALCDAY5, (3) cases with no sleep data in SLEPTIM1, and (4) no valid asthma data. There are **52,984 cases (rows) in the final data set**.
+Next apply exclusions to remove (1) non veterans, (2) cases with no drinking data in ALCDAY5, (3) cases with no sleep data in SLEPTIM1, and (4) no valid asthma data. There are **52,984 cases (rows) in the final data set**.
+
+The figure below illustrates the data reduction process used in this analysis (with the number of cases/rows for each step).
 
 ![Data Reduction Flowchart](./visuals/datareduction.png "Data Reduction Flowchart")
 
