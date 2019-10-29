@@ -1030,9 +1030,7 @@ source("190_Write out analytic.R", echo = TRUE)
     ## [61] "EXERANY3"   "NOEXER"
 
 Note: the final data set includes 62 variables (columns) and 52,984
-cases (rows).
-
-This dataset will be used in all subsequent analyses.
+cases (rows). This dataset will be used in all subsequent analyses.
 
 ## Initial Check of Key Exposure and Outcome Variables in R
 
@@ -1097,6 +1095,27 @@ source("205_Check sleep duration.R", echo = TRUE)
     ## +     xlab = "ALCGRP", ylab = "SLEPTIM2")
 
 ![](README_files/figure-gfm/ckOutcomeVariables-3.png)<!-- -->
+
+The preliminary “peek” at the data for the two outcome variables above
+shows, 10% of the veterans in this study reported having asthma. This
+should be sufficient for correlational analyses.
+
+The ALCGRP variable was coded such that 1=No drinks in the past 30 days,
+2=Drink monthly, and 3=Drink weekly. The AsthmaAlcFreq table above shows
+the number of cases reporting asthma or no asthma for each of the three
+groups.
+
+Average number of hours slept reported by all subjects was 7.1 hours,
+ranging from 1 to 24 hours in this data set.
+
+The distribution of hours slept (SLEPTIM2) appears normal (see histogram
+and boxplot of SLEPTIM2 above).
+
+Breaking this boxplot out into separate boxplots for each of the alcohol
+groups (ALCGRP) appears to show similar and overlapping results for all
+three values of the variable. This probably does not bode well for the
+significance of the differences in this outcome variable that will
+follow later in this analysis.
 
 ## Calculation of Frequencies (Categorical Variables)
 
