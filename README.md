@@ -1071,6 +1071,10 @@ source("205_Check sleep duration.R", echo = TRUE)
 ```
 
     ## 
+    ## > library(ggplot2)
+    ## 
+    ## > library(gridExtra)
+    ## 
     ## > analytic <- read.csv(file = "./data/analytic.csv", 
     ## +     header = TRUE, sep = ",")
     ## 
@@ -1078,23 +1082,25 @@ source("205_Check sleep duration.R", echo = TRUE)
     ##    Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
     ##   1.000   6.000   7.000   7.058   8.000  24.000 
     ## 
-    ## > hist(analytic$SLEPTIM2, main = "Histogram of SLEPTIM2", 
-    ## +     xlab = "Class SLEPTIM2", ylab = "Frequency", xlim = c(0, 
-    ## +         15), ylim = c(0,  .... [TRUNCATED]
+    ## > hist1 <- ggplot(analytic, aes(x = SLEPTIM2))
+    ## 
+    ## > hist1 <- hist1 + geom_histogram(binwidth = 1, color = "black", 
+    ## +     fill = "lightblue") + labs(title = "Histogram of SLEPTIM2", 
+    ## +     x = "Report ..." ... [TRUNCATED] 
+    ## 
+    ## > analytic_b <- analytic
+    ## 
+    ## > analytic_b$ALCGRP <- as.factor(analytic_b$ALCGRP)
+    ## 
+    ## > boxplot1 <- ggplot(analytic_b, aes(x = ALCGRP, y = SLEPTIM2))
+    ## 
+    ## > boxplot1 <- boxplot1 + geom_boxplot(aes(color = ALCGRP)) + 
+    ## +     labs(title = "Boxplot of SLEPTIM2 by ALCGRP", y = "Reported Hours Slept", 
+    ## +       .... [TRUNCATED] 
+    ## 
+    ## > grid.arrange(hist1, boxplot1, ncol = 2)
 
 ![](README_files/figure-gfm/ckOutcomeVariables-1.png)<!-- -->
-
-    ## 
-    ## > boxplot(analytic$SLEPTIM2, main = "Box Plot of SLEPTIM2", 
-    ## +     xlab = "Total File", ylab = "SLEPTIM2")
-
-![](README_files/figure-gfm/ckOutcomeVariables-2.png)<!-- -->
-
-    ## 
-    ## > boxplot(SLEPTIM2 ~ ALCGRP, data = analytic, main = "Box Plot of SLEPTIM2 by ALCGRP", 
-    ## +     xlab = "ALCGRP", ylab = "SLEPTIM2")
-
-![](README_files/figure-gfm/ckOutcomeVariables-3.png)<!-- -->
 
 The preliminary “peek” at the data for the two outcome variables above
 shows, 10% of the veterans in this study reported having asthma. This

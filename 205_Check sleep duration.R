@@ -1,3 +1,6 @@
+library(ggplot2)
+library(gridExtra)
+
 # read in analytic table
 analytic <- read.csv(file="./data/analytic.csv", header=TRUE, sep=",")
 
@@ -6,23 +9,24 @@ analytic <- read.csv(file="./data/analytic.csv", header=TRUE, sep=",")
 # summary statistics
 summary(analytic$SLEPTIM2)
 
-# look at histogram and box plot of total file
-hist(analytic$SLEPTIM2, 
-	main = "Histogram of SLEPTIM2",
-	xlab = "Class SLEPTIM2",
-	ylab = "Frequency",
-	xlim=c(0,15), 
-	ylim=c(0,20000),
-	border = "red",
-	col= "yellow",
-	las = 1,
-	breaks = 24)
+# Basic histogram
+hist1 <- ggplot(analytic, aes(x=SLEPTIM2))
+hist1 <- hist1 + geom_histogram(binwidth=1, color="black", fill="lightblue") +
+  labs(title="Histogram of SLEPTIM2", x="Reported Hours Slept", y="Count") + 
+  geom_vline(aes(xintercept=mean(SLEPTIM2)), color="blue", 
+             linetype="dashed", size=1) + theme_test()
 
-boxplot(analytic$SLEPTIM2, main="Box Plot of SLEPTIM2", 
-  	xlab="Total File", ylab="SLEPTIM2")
+# Boxplots of groups next to each other
+analytic_b <- analytic
+analytic_b$ALCGRP <- as.factor(analytic_b$ALCGRP)
+boxplot1 <- ggplot(analytic_b, aes(x=ALCGRP, y=SLEPTIM2))
+boxplot1 <- boxplot1 + geom_boxplot(aes(color=ALCGRP)) +
+  labs(title="Boxplot of SLEPTIM2 by ALCGRP", 
+       y="Reported Hours Slept", x="ALCGRP") + theme_test()
 
-# See box plots of groups next to each other
-boxplot(SLEPTIM2~ALCGRP, data=analytic, main="Box Plot of SLEPTIM2 by ALCGRP", 
-  	xlab="ALCGRP", ylab="SLEPTIM2")
+# Now print them side by side
+grid.arrange(hist1, boxplot1, ncol=2)
+
+
 
 

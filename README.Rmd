@@ -140,6 +140,16 @@ source("205_Check sleep duration.R", echo = TRUE)
 
 ```
 
+The preliminary "peek" at the data for the two outcome variables above shows, 10% of the veterans in this study reported having asthma. This should be sufficient for correlational analyses.
+
+The ALCGRP variable was coded such that 1=No drinks in the past 30 days, 2=Drink monthly, and 3=Drink weekly. The AsthmaAlcFreq table above shows the number of cases reporting asthma or no asthma for each of the three groups.
+
+Average number of hours slept reported by all subjects was 7.1 hours, ranging from 1 to 24 hours in this data set.
+
+The distribution of hours slept (SLEPTIM2) appears normal (see histogram and boxplot of SLEPTIM2 above).
+
+Breaking this boxplot out into separate boxplots for each of the alcohol groups (ALCGRP) appears to show similar and overlapping results for all three values of the variable. This probably does not bode well for the significance of the differences in this outcome variable that will follow later in this analysis.
+
 ## Calculation of Frequencies (Categorical Variables)
 
 Next, frequencies for the exposure and categorical outcome variables were produced in R code. 
