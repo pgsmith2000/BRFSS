@@ -153,22 +153,27 @@ behavior leads to greater likelihood of athsma in veterans.**
 
 <!-- end list -->
 
-  - 100\_Read in BRFSS XPT.R
-  - 105\_Keep vars.R
-  - 110\_Apply exclusions.R
-  - 115\_Make alcohol variables.R
-  - 120\_Make outcome variables.R
-  - 125\_Make categorical variables.R
-  - 190\_Write out analytic.R
-  - 200\_Check asthma.R
-  - 205\_Check sleep duration.R
-  - 210\_Table 1 overall frequencies.R
-  - 215\_Table 1 asthma frequencies.R
-  - 220\_Table 1 no asthma frequencies.R
-  - 225\_Table 1 means and sds.R
-  - 230\_Table 1 chi squares.R
-  - 235\_Table 1 ttests.R
-  - 240\_Table 1 ANOVAs.R
+  - [100\_Read in BRFSS XPT.R](./100_Read%20in%20BRFSS%20XPT.R)
+  - [105\_Keep vars.R](./105_Keep%20vars.R)
+  - [110\_Apply exclusions.R](./110_Apply%20exclusions.R)
+  - [115\_Make alcohol variables.R](./115_Make%20alcohol%20variables.R)
+  - [120\_Make outcome variables.R](./120_Make%20outcome%20variables.R)
+  - [125\_Make categorical
+    variables.R](./125_Make%20categorical%20variables.R)
+  - [190\_Write out analytic.R](./190_Write%20out%20analytic.R)
+  - [200\_Check asthma.R](./200_Check%20asthma.R%5D)
+  - [205\_Check sleep duration.R](./205_Check%20sleep%20duration.R)
+  - [210\_Table 1 overall
+    frequencies.R](./210_Table%201%20overall%20frequencies.R)
+  - [215\_Table 1 asthma
+    frequencies.R](./215_Table%201%20asthma%20frequencies.R)
+  - [220\_Table 1 no asthma
+    frequencies.R](./220_Table%201%20no%20asthma%20frequencies.R)
+  - [225\_Table 1 means and
+    sds.R](./225_Table%201%20means%20and%20sds.R)
+  - [230\_Table 1 chi squares.R](./230_Table%201%20chi%20squares.R)
+  - [235\_Table 1 ttests.R](./235_Table%201%20ttests.R)
+  - [240\_Table 1 ANOVAs.R](./240_Table%201%20ANOVAs.R)
 
 <!-- end list -->
 
