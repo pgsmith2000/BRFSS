@@ -135,7 +135,10 @@ behavior leads to greater likelihood of athsma in veterans.**
     survey downloaded from the CDC (see link above).
 2.  **Data Dictionary** - for this analysis I developed a data
     dictionary to document the coding of the CDC variables, and recoding
-    required for additional variables that I added to this analyis.
+    required for additional variables that I added to this analysis.
+    [**Data\_Dictionary\_2018 \[EXCEL – 33
+    KB\]**](./documentation/Data_Dictionary_2018.xlsx.) ![Data
+    Dictionary](./visuals/data_dictionary.png)
 3.  **BRFSS Dataset** - the dataset used in this analysis was downloaded
     from the link above in SAS EPT format. It was stored in the /data
     subdirectory. However, the data set is large and could not be stored
@@ -152,8 +155,9 @@ To build my initial dataset for these analyses, I selected and
 downloaded the BRFF data in SAS XPT format. This format is more compact
 and also contains additional variables calculated by the CDC. For more
 information, please see my [**Data Dictionary with Confounders \[XLSX -
-33KB\]**](documentation/Data_Dictionary_with_Confounders.xlsx) for this
-project and note the values in the source field and values (BRFSS, SAS).
+33KB\]**](./documentation/Data_Dictionary_with_Confounders.xlsx) for
+this project and note the values in the source field and values (BRFSS,
+SAS).
 
 ``` r
 # Read in the inital downloaded BRFSS dataset in SAS XPT format
@@ -1887,4 +1891,18 @@ source("240_Table 1 ANOVAs.R", echo = TRUE)
 
 ## Final Table 1 for Categorical Hypothesis
 
+  - [**Categorical Table 1 \[EXCEL – 22
+    KB\]**](./documentation/Categorical_Tbl_1_2018.xlsx.) You can
+    download the Categorical Table 1 in Microsoft Excel Format.
+
+![Categorical Table 1 PNF](./visuals/categorical_table1.png
+"Categorical Table 1")
+
 ## Final Table 1 for Continuous Hypothesis
+
+  - [**Continuous Table 1 \[EXCEL – 20
+    KB\]**](./documentation/Continuous_Tbl_1_2018.xlsx.) You can
+    download the Continuous Table 1 in Microsoft Excel Format.
+
+![Continuous Table 1 PNF](./visuals/continuous_table1.png
+"Continuous Table 1")
