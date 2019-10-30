@@ -145,7 +145,33 @@ behavior leads to greater likelihood of athsma in veterans.**
     in this github repository. If the reader chooses to download and run
     the R code for this analysis. The dataset will have to be downloaded
     and stored in the correct subfolder.
-4.  **Descriptive Analysis in R**
+4.  **Descriptive Analysis in R** - The list below details the
+    individual R code modules used in this analysis. I have found that
+    breaking my code into a series of separate relatively small modules
+    is useful for development and testing. It also makes the code a
+    little easier to understand.
+
+<!-- end list -->
+
+  - 100\_Read in BRFSS XPT.R
+  - 105\_Keep vars.R
+  - 110\_Apply exclusions.R
+  - 115\_Make alcohol variables.R
+  - 120\_Make outcome variables.R
+  - 125\_Make categorical variables.R
+  - 190\_Write out analytic.R
+  - 200\_Check asthma.R
+  - 205\_Check sleep duration.R
+  - 210\_Table 1 overall frequencies.R
+  - 215\_Table 1 asthma frequencies.R
+  - 220\_Table 1 no asthma frequencies.R
+  - 225\_Table 1 means and sds.R
+  - 230\_Table 1 chi squares.R
+  - 235\_Table 1 ttests.R
+  - 240\_Table 1 ANOVAs.R
+
+<!-- end list -->
+
 5.  **Final Table 1 for Categorical Outcome Variable**
 6.  **Final Table 1 for Continuous Outcome Variable**
 
