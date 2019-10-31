@@ -37,6 +37,13 @@ Paul G. Smith
         Hypothesis](#final-table-1-for-categorical-hypothesis)
       - [Final Table 1 for Continuous
         Hypothesis](#final-table-1-for-continuous-hypothesis)
+      - [Regression Analyses](#regression-analyses)
+          - [Regression of Hours Slept (SLEPTIM3) and Alcohol Grouping
+            (ALCGRP)](#regression-of-hours-slept-sleptim3-and-alcohol-grouping-alcgrp)
+          - [Development and Testing of Regression Models 1 and
+            2](#development-and-testing-of-regression-models-1-and-2)
+          - [Stepwise Regression of Candidates for Model
+            3](#stepwise-regression-of-candidates-for-model-3)
 
 # Sample Descriptive Analysis Using Publicly Available Healthcare Data
 
@@ -1937,3 +1944,1396 @@ source("240_Table 1 ANOVAs.R", echo = TRUE)
 
 ![Continuous Table 1 PNF](./visuals/continuous_table1.png
 "Continuous Table 1")
+
+## Regression Analyses
+
+### Regression of Hours Slept (SLEPTIM3) and Alcohol Grouping (ALCGRP)
+
+``` r
+source("245_Diagnostic plots.R", echo = TRUE)
+```
+
+    ## 
+    ## > analytic <- read.csv(file = "./data/analytic.csv", 
+    ## +     header = TRUE, sep = ",")
+    ## 
+    ## > AlcSleepTimeRegression = lm(SLEPTIM2 ~ ALCGRP, data = analytic)
+    ## 
+    ## > AlcSleepTimeRegression
+    ## 
+    ## Call:
+    ## lm(formula = SLEPTIM2 ~ ALCGRP, data = analytic)
+    ## 
+    ## Coefficients:
+    ## (Intercept)       ALCGRP  
+    ##     7.09502     -0.02149  
+    ## 
+    ## 
+    ## > summary(AlcSleepTimeRegression)
+    ## 
+    ## Call:
+    ## lm(formula = SLEPTIM2 ~ ALCGRP, data = analytic)
+    ## 
+    ## Residuals:
+    ##    Min     1Q Median     3Q    Max 
+    ## -6.074 -1.052 -0.052  0.948 16.969 
+    ## 
+    ## Coefficients:
+    ##              Estimate Std. Error t value Pr(>|t|)    
+    ## (Intercept)  7.095020   0.017645 402.104   <2e-16 ***
+    ## ALCGRP      -0.021486   0.009421  -2.281   0.0226 *  
+    ## ---
+    ## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+    ## 
+    ## Residual standard error: 1.583 on 52982 degrees of freedom
+    ## Multiple R-squared:  9.816e-05,  Adjusted R-squared:  7.929e-05 
+    ## F-statistic: 5.201 on 1 and 52982 DF,  p-value: 0.02257
+    ## 
+    ## 
+    ## > layout(matrix(c(1, 2, 3, 4), 2, 2))
+    ## 
+    ## > plot(AlcSleepTimeRegression, main = "Alcohol by Sleep Duration")
+
+![](README_files/figure-gfm/sleepRegression-1.png)<!-- -->
+
+### Development and Testing of Regression Models 1 and 2
+
+``` r
+source("250_Models 1 and 2 linear regression.R", echo = TRUE)
+```
+
+    ## 
+    ## > analytic <- read.csv(file = "./data/analytic.csv", 
+    ## +     header = TRUE, sep = ",")
+    ## 
+    ## > Model1 = lm(SLEPTIM2 ~ DRKMONTHLY + DRKWEEKLY, data = analytic)
+    ## 
+    ## > summary(Model1)
+    ## 
+    ## Call:
+    ## lm(formula = SLEPTIM2 ~ DRKMONTHLY + DRKWEEKLY, data = analytic)
+    ## 
+    ## Residuals:
+    ##     Min      1Q  Median      3Q     Max 
+    ## -6.0872 -1.0211 -0.0211  0.9331 16.9789 
+    ## 
+    ## Coefficients:
+    ##             Estimate Std. Error t value Pr(>|t|)    
+    ## (Intercept)  7.06689    0.01684 419.625   <2e-16 ***
+    ## DRKMONTHLY  -0.04581    0.02011  -2.278   0.0227 *  
+    ## DRKWEEKLY    0.02035    0.01976   1.030   0.3032    
+    ## ---
+    ## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+    ## 
+    ## Residual standard error: 1.583 on 52981 degrees of freedom
+    ## Multiple R-squared:  0.0003688,  Adjusted R-squared:  0.0003311 
+    ## F-statistic: 9.773 on 2 and 52981 DF,  p-value: 5.704e-05
+    ## 
+    ## 
+    ## > library(devtools)
+
+    ## Loading required package: usethis
+
+    ## 
+    ## > library(broom)
+    ## 
+    ## > Tidy_Model1 <- tidy(Model1)
+    ## 
+    ## > write.csv(Tidy_Model1, file = "./data/models/LinearRegressionModel1.csv")
+    ## 
+    ## > Model2 = lm(SLEPTIM2 ~ DRKMONTHLY + DRKWEEKLY + MALE + 
+    ## +     AGE2 + AGE3 + AGE4 + AGE5 + AGE6, data = analytic)
+    ## 
+    ## > summary(Model2)
+    ## 
+    ## Call:
+    ## lm(formula = SLEPTIM2 ~ DRKMONTHLY + DRKWEEKLY + MALE + AGE2 + 
+    ##     AGE3 + AGE4 + AGE5 + AGE6, data = analytic)
+    ## 
+    ## Residuals:
+    ##     Min      1Q  Median      3Q     Max 
+    ## -6.4157 -0.7979  0.1790  0.6640 17.5522 
+    ## 
+    ## Coefficients:
+    ##             Estimate Std. Error t value Pr(>|t|)    
+    ## (Intercept)  6.70784    0.05265 127.405  < 2e-16 ***
+    ## DRKMONTHLY  -0.01869    0.01961  -0.953 0.340535    
+    ## DRKWEEKLY   -0.04181    0.01932  -2.164 0.030438 *  
+    ## MALE        -0.05656    0.02308  -2.451 0.014252 *  
+    ## AGE2        -0.20347    0.05470  -3.720 0.000199 ***
+    ## AGE3        -0.14780    0.05340  -2.768 0.005647 ** 
+    ## AGE4        -0.00522    0.05069  -0.103 0.917994    
+    ## AGE5         0.18841    0.04955   3.802 0.000143 ***
+    ## AGE6         0.72653    0.04769  15.235  < 2e-16 ***
+    ## ---
+    ## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+    ## 
+    ## Residual standard error: 1.542 on 52975 degrees of freedom
+    ## Multiple R-squared:  0.05099,    Adjusted R-squared:  0.05085 
+    ## F-statistic: 355.8 on 8 and 52975 DF,  p-value: < 2.2e-16
+    ## 
+    ## 
+    ## > Tidy_Model2 <- tidy(Model2)
+    ## 
+    ## > write.csv(Tidy_Model2, file = "./data/models/LinearRegressionModel2.csv")
+
+### Stepwise Regression of Candidates for Model 3
+
+``` r
+source("255_Linear regression models.R", echo = TRUE)
+```
+
+    ## 
+    ## > analytic <- read.csv(file = "./data/analytic.csv", 
+    ## +     header = TRUE, sep = ",")
+    ## 
+    ## > Model3 = lm(SLEPTIM2 ~ DRKWEEKLY + AGE2 + AGE3 + AGE5 + 
+    ## +     AGE6, data = analytic)
+    ## 
+    ## > summary(Model3)
+    ## 
+    ## Call:
+    ## lm(formula = SLEPTIM2 ~ DRKWEEKLY + AGE2 + AGE3 + AGE5 + AGE6, 
+    ##     data = analytic)
+    ## 
+    ## Residuals:
+    ##     Min      1Q  Median      3Q     Max 
+    ## -6.3667 -0.8073  0.1655  0.6605 17.5562 
+    ## 
+    ## Coefficients:
+    ##             Estimate Std. Error t value Pr(>|t|)    
+    ## (Intercept)  6.64227    0.01882 352.976  < 2e-16 ***
+    ## DRKWEEKLY   -0.02721    0.01359  -2.002   0.0453 *  
+    ## AGE2        -0.19849    0.03372  -5.887 3.96e-09 ***
+    ## AGE3        -0.14139    0.03158  -4.478 7.57e-06 ***
+    ## AGE5         0.19227    0.02451   7.845 4.42e-15 ***
+    ## AGE6         0.72448    0.02022  35.827  < 2e-16 ***
+    ## ---
+    ## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+    ## 
+    ## Residual standard error: 1.543 on 52978 degrees of freedom
+    ## Multiple R-squared:  0.05087,    Adjusted R-squared:  0.05078 
+    ## F-statistic: 567.8 on 5 and 52978 DF,  p-value: < 2.2e-16
+    ## 
+    ## 
+    ## > Model4 = lm(SLEPTIM2 ~ DRKWEEKLY + AGE2 + AGE3 + AGE5 + 
+    ## +     AGE6 + SMOKER, data = analytic)
+    ## 
+    ## > summary(Model4)
+    ## 
+    ## Call:
+    ## lm(formula = SLEPTIM2 ~ DRKWEEKLY + AGE2 + AGE3 + AGE5 + AGE6 + 
+    ##     SMOKER, data = analytic)
+    ## 
+    ## Residuals:
+    ##     Min      1Q  Median      3Q     Max 
+    ## -6.3888 -0.6893  0.1071  0.6379 17.5006 
+    ## 
+    ## Coefficients:
+    ##             Estimate Std. Error t value Pr(>|t|)    
+    ## (Intercept)  6.68928    0.01916 349.114  < 2e-16 ***
+    ## DRKWEEKLY   -0.02670    0.01357  -1.967   0.0492 *  
+    ## AGE2        -0.18990    0.03368  -5.639 1.72e-08 ***
+    ## AGE3        -0.13635    0.03153  -4.324 1.54e-05 ***
+    ## AGE5         0.20358    0.02449   8.313  < 2e-16 ***
+    ## AGE6         0.69956    0.02029  34.480  < 2e-16 ***
+    ## SMOKER      -0.24021    0.01916 -12.537  < 2e-16 ***
+    ## ---
+    ## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+    ## 
+    ## Residual standard error: 1.54 on 52977 degrees of freedom
+    ## Multiple R-squared:  0.05367,    Adjusted R-squared:  0.05357 
+    ## F-statistic: 500.8 on 6 and 52977 DF,  p-value: < 2.2e-16
+    ## 
+    ## 
+    ## > Model5 = lm(SLEPTIM2 ~ DRKWEEKLY + AGE2 + AGE3 + AGE5 + 
+    ## +     AGE6 + SMOKER + HISPANIC, data = analytic)
+    ## 
+    ## > summary(Model5)
+    ## 
+    ## Call:
+    ## lm(formula = SLEPTIM2 ~ DRKWEEKLY + AGE2 + AGE3 + AGE5 + AGE6 + 
+    ##     SMOKER + HISPANIC, data = analytic)
+    ## 
+    ## Residuals:
+    ##     Min      1Q  Median      3Q     Max 
+    ## -6.3928 -0.7015  0.0997  0.6333 17.4813 
+    ## 
+    ## Coefficients:
+    ##             Estimate Std. Error t value Pr(>|t|)    
+    ## (Intercept)  6.70145    0.01929 347.368  < 2e-16 ***
+    ## DRKWEEKLY   -0.02608    0.01357  -1.922   0.0547 .  
+    ## AGE2        -0.18271    0.03369  -5.423 5.90e-08 ***
+    ## AGE3        -0.13279    0.03153  -4.211 2.55e-05 ***
+    ## AGE5         0.19888    0.02450   8.118 4.85e-16 ***
+    ## AGE6         0.69134    0.02034  33.984  < 2e-16 ***
+    ## SMOKER      -0.24058    0.01916 -12.559  < 2e-16 ***
+    ## HISPANIC    -0.17865    0.03359  -5.319 1.05e-07 ***
+    ## ---
+    ## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+    ## 
+    ## Residual standard error: 1.54 on 52976 degrees of freedom
+    ## Multiple R-squared:  0.05418,    Adjusted R-squared:  0.05405 
+    ## F-statistic: 433.5 on 7 and 52976 DF,  p-value: < 2.2e-16
+    ## 
+    ## 
+    ## > Model6 = lm(SLEPTIM2 ~ DRKWEEKLY + AGE2 + AGE3 + AGE5 + 
+    ## +     AGE6 + SMOKER + HISPANIC + BLACK + ASIAN + OTHRACE, data = analytic)
+    ## 
+    ## > summary(Model6)
+    ## 
+    ## Call:
+    ## lm(formula = SLEPTIM2 ~ DRKWEEKLY + AGE2 + AGE3 + AGE5 + AGE6 + 
+    ##     SMOKER + HISPANIC + BLACK + ASIAN + OTHRACE, data = analytic)
+    ## 
+    ## Residuals:
+    ##     Min      1Q  Median      3Q     Max 
+    ## -6.4068 -0.7351  0.0685  0.6109 17.6250 
+    ## 
+    ## Coefficients:
+    ##             Estimate Std. Error t value Pr(>|t|)    
+    ## (Intercept)  6.73505    0.01957 344.203  < 2e-16 ***
+    ## DRKWEEKLY   -0.01766    0.01358  -1.300    0.193    
+    ## AGE2        -0.17640    0.03367  -5.239 1.62e-07 ***
+    ## AGE3        -0.12709    0.03150  -4.034 5.48e-05 ***
+    ## AGE5         0.19642    0.02448   8.024 1.04e-15 ***
+    ## AGE6         0.67175    0.02042  32.897  < 2e-16 ***
+    ## SMOKER      -0.23397    0.01917 -12.206  < 2e-16 ***
+    ## HISPANIC    -0.14853    0.03405  -4.362 1.29e-05 ***
+    ## BLACK       -0.14798    0.02558  -5.785 7.31e-09 ***
+    ## ASIAN       -0.47022    0.06431  -7.312 2.66e-13 ***
+    ## OTHRACE     -0.18370    0.02750  -6.681 2.40e-11 ***
+    ## ---
+    ## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+    ## 
+    ## Residual standard error: 1.538 on 52973 degrees of freedom
+    ## Multiple R-squared:  0.05631,    Adjusted R-squared:  0.05613 
+    ## F-statistic: 316.1 on 10 and 52973 DF,  p-value: < 2.2e-16
+    ## 
+    ## 
+    ## > Model7 = lm(SLEPTIM2 ~ DRKWEEKLY + AGE2 + AGE3 + AGE5 + 
+    ## +     AGE6 + SMOKER + HISPANIC + BLACK + ASIAN + OTHRACE + NEVERMAR + 
+    ## +     FORMERMAR, dat .... [TRUNCATED] 
+    ## 
+    ## > summary(Model7)
+    ## 
+    ## Call:
+    ## lm(formula = SLEPTIM2 ~ DRKWEEKLY + AGE2 + AGE3 + AGE5 + AGE6 + 
+    ##     SMOKER + HISPANIC + BLACK + ASIAN + OTHRACE + NEVERMAR + 
+    ##     FORMERMAR, data = analytic)
+    ## 
+    ## Residuals:
+    ##     Min      1Q  Median      3Q     Max 
+    ## -6.4279 -0.7465  0.0668  0.6582 17.6158 
+    ## 
+    ## Coefficients:
+    ##             Estimate Std. Error t value Pr(>|t|)    
+    ## (Intercept)  6.74654    0.01972 342.175  < 2e-16 ***
+    ## DRKWEEKLY   -0.01490    0.01359  -1.096    0.273    
+    ## AGE2        -0.18168    0.03368  -5.394 6.92e-08 ***
+    ## AGE3        -0.12856    0.03150  -4.081 4.49e-05 ***
+    ## AGE5         0.20157    0.02450   8.228  < 2e-16 ***
+    ## AGE6         0.68136    0.02054  33.179  < 2e-16 ***
+    ## SMOKER      -0.22267    0.01932 -11.526  < 2e-16 ***
+    ## HISPANIC    -0.14898    0.03405  -4.376 1.21e-05 ***
+    ## BLACK       -0.14217    0.02564  -5.545 2.96e-08 ***
+    ## ASIAN       -0.47422    0.06430  -7.375 1.66e-13 ***
+    ## OTHRACE     -0.18066    0.02750  -6.569 5.12e-11 ***
+    ## NEVERMAR    -0.06356    0.05105  -1.245    0.213    
+    ## FORMERMAR   -0.07124    0.01526  -4.670 3.02e-06 ***
+    ## ---
+    ## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+    ## 
+    ## Residual standard error: 1.538 on 52971 degrees of freedom
+    ## Multiple R-squared:  0.05671,    Adjusted R-squared:  0.0565 
+    ## F-statistic: 265.4 on 12 and 52971 DF,  p-value: < 2.2e-16
+    ## 
+    ## 
+    ## > Model8 = lm(SLEPTIM2 ~ DRKWEEKLY + AGE2 + AGE3 + AGE5 + 
+    ## +     AGE6 + SMOKER + HISPANIC + BLACK + ASIAN + OTHRACE + FORMERMAR + 
+    ## +     FAIRHLTH + PO .... [TRUNCATED] 
+    ## 
+    ## > summary(Model8)
+    ## 
+    ## Call:
+    ## lm(formula = SLEPTIM2 ~ DRKWEEKLY + AGE2 + AGE3 + AGE5 + AGE6 + 
+    ##     SMOKER + HISPANIC + BLACK + ASIAN + OTHRACE + FORMERMAR + 
+    ##     FAIRHLTH + POORHLTH, data = analytic)
+    ## 
+    ## Residuals:
+    ##     Min      1Q  Median      3Q     Max 
+    ## -6.4562 -0.7568  0.0295  0.7115 17.6019 
+    ## 
+    ## Coefficients:
+    ##             Estimate Std. Error t value Pr(>|t|)    
+    ## (Intercept)  6.75680    0.01971 342.895  < 2e-16 ***
+    ## DRKWEEKLY    0.00504    0.01372   0.367 0.713355    
+    ## AGE2        -0.19252    0.03367  -5.719 1.08e-08 ***
+    ## AGE3        -0.13493    0.03148  -4.287 1.81e-05 ***
+    ## AGE5         0.21372    0.02450   8.722  < 2e-16 ***
+    ## AGE6         0.69439    0.02055  33.793  < 2e-16 ***
+    ## SMOKER      -0.20187    0.01939 -10.413  < 2e-16 ***
+    ## HISPANIC    -0.14451    0.03402  -4.248 2.16e-05 ***
+    ## BLACK       -0.13813    0.02558  -5.401 6.66e-08 ***
+    ## ASIAN       -0.47053    0.06424  -7.325 2.42e-13 ***
+    ## OTHRACE     -0.16619    0.02751  -6.041 1.54e-09 ***
+    ## FORMERMAR   -0.05795    0.01523  -3.805 0.000142 ***
+    ## FAIRHLTH    -0.16775    0.01912  -8.775  < 2e-16 ***
+    ## POORHLTH    -0.19500    0.02865  -6.806 1.02e-11 ***
+    ## ---
+    ## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+    ## 
+    ## Residual standard error: 1.536 on 52970 degrees of freedom
+    ## Multiple R-squared:  0.05862,    Adjusted R-squared:  0.05839 
+    ## F-statistic: 253.7 on 13 and 52970 DF,  p-value: < 2.2e-16
+    ## 
+    ## 
+    ## > Model9 = lm(SLEPTIM2 ~ DRKWEEKLY + AGE2 + AGE3 + AGE5 + 
+    ## +     AGE6 + SMOKER + HISPANIC + BLACK + ASIAN + OTHRACE + NEVERMAR + 
+    ## +     FORMERMAR + FA .... [TRUNCATED] 
+    ## 
+    ## > summary(Model9)
+    ## 
+    ## Call:
+    ## lm(formula = SLEPTIM2 ~ DRKWEEKLY + AGE2 + AGE3 + AGE5 + AGE6 + 
+    ##     SMOKER + HISPANIC + BLACK + ASIAN + OTHRACE + NEVERMAR + 
+    ##     FORMERMAR + FAIRHLTH + POORHLTH + NOPLAN, data = analytic)
+    ## 
+    ## Residuals:
+    ##     Min      1Q  Median      3Q     Max 
+    ## -6.4885 -0.7556  0.0302  0.7111 17.6036 
+    ## 
+    ## Coefficients:
+    ##             Estimate Std. Error t value Pr(>|t|)    
+    ## (Intercept)  6.75559    0.01982 340.795  < 2e-16 ***
+    ## DRKWEEKLY    0.00487    0.01372   0.355    0.723    
+    ## AGE2        -0.19312    0.03367  -5.736 9.77e-09 ***
+    ## AGE3        -0.13439    0.03148  -4.269 1.96e-05 ***
+    ## AGE5         0.21421    0.02450   8.741  < 2e-16 ***
+    ## AGE6         0.69608    0.02064  33.730  < 2e-16 ***
+    ## SMOKER      -0.20243    0.01947 -10.399  < 2e-16 ***
+    ## HISPANIC    -0.14483    0.03403  -4.256 2.08e-05 ***
+    ## BLACK       -0.13728    0.02563  -5.356 8.55e-08 ***
+    ## ASIAN       -0.47084    0.06424  -7.330 2.34e-13 ***
+    ## OTHRACE     -0.16607    0.02752  -6.036 1.59e-09 ***
+    ## NEVERMAR    -0.04673    0.05104  -0.916    0.360    
+    ## FORMERMAR   -0.05976    0.01530  -3.906 9.38e-05 ***
+    ## FAIRHLTH    -0.16761    0.01912  -8.764  < 2e-16 ***
+    ## POORHLTH    -0.19468    0.02866  -6.792 1.12e-11 ***
+    ## NOPLAN       0.03686    0.03384   1.089    0.276    
+    ## ---
+    ## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+    ## 
+    ## Residual standard error: 1.536 on 52968 degrees of freedom
+    ## Multiple R-squared:  0.05866,    Adjusted R-squared:  0.05839 
+    ## F-statistic:   220 on 15 and 52968 DF,  p-value: < 2.2e-16
+    ## 
+    ## 
+    ## > Model10 = lm(SLEPTIM2 ~ DRKWEEKLY + AGE2 + AGE3 + 
+    ## +     AGE5 + AGE6 + SMOKER + HISPANIC + BLACK + ASIAN + OTHRACE + 
+    ## +     NEVERMAR + FORMERMAR + F .... [TRUNCATED] 
+    ## 
+    ## > summary(Model10)
+    ## 
+    ## Call:
+    ## lm(formula = SLEPTIM2 ~ DRKWEEKLY + AGE2 + AGE3 + AGE5 + AGE6 + 
+    ##     SMOKER + HISPANIC + BLACK + ASIAN + OTHRACE + NEVERMAR + 
+    ##     FORMERMAR + FAIRHLTH + POORHLTH + LOWED + SOMECOLL, data = analytic)
+    ## 
+    ## Residuals:
+    ##     Min      1Q  Median      3Q     Max 
+    ## -6.4976 -0.7684  0.0622  0.7027 17.6265 
+    ## 
+    ## Coefficients:
+    ##              Estimate Std. Error t value Pr(>|t|)    
+    ## (Intercept)  6.768407   0.021033 321.793  < 2e-16 ***
+    ## DRKWEEKLY    0.003163   0.013793   0.229 0.818639    
+    ## AGE2        -0.187667   0.033671  -5.573 2.51e-08 ***
+    ## AGE3        -0.129418   0.031501  -4.108 3.99e-05 ***
+    ## AGE5         0.213463   0.024495   8.714  < 2e-16 ***
+    ## AGE6         0.691764   0.020555  33.654  < 2e-16 ***
+    ## SMOKER      -0.201947   0.019602 -10.302  < 2e-16 ***
+    ## HISPANIC    -0.144473   0.034014  -4.248 2.17e-05 ***
+    ## BLACK       -0.134078   0.025626  -5.232 1.68e-07 ***
+    ## ASIAN       -0.471880   0.064234  -7.346 2.07e-13 ***
+    ## OTHRACE     -0.163981   0.027512  -5.960 2.53e-09 ***
+    ## NEVERMAR    -0.044023   0.051039  -0.863 0.388396    
+    ## FORMERMAR   -0.058989   0.015319  -3.851 0.000118 ***
+    ## FAIRHLTH    -0.170160   0.019187  -8.869  < 2e-16 ***
+    ## POORHLTH    -0.197155   0.028717  -6.865 6.70e-12 ***
+    ## LOWED        0.034253   0.016727   2.048 0.040591 *  
+    ## SOMECOLL    -0.060752   0.016296  -3.728 0.000193 ***
+    ## ---
+    ## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+    ## 
+    ## Residual standard error: 1.536 on 52967 degrees of freedom
+    ## Multiple R-squared:  0.0592, Adjusted R-squared:  0.05892 
+    ## F-statistic: 208.3 on 16 and 52967 DF,  p-value: < 2.2e-16
+    ## 
+    ## 
+    ## > Model11 = lm(SLEPTIM2 ~ DRKWEEKLY + AGE2 + AGE3 + 
+    ## +     AGE5 + AGE6 + SMOKER + HISPANIC + BLACK + ASIAN + OTHRACE + 
+    ## +     FORMERMAR + FAIRHLTH + P .... [TRUNCATED] 
+    ## 
+    ## > summary(Model11)
+    ## 
+    ## Call:
+    ## lm(formula = SLEPTIM2 ~ DRKWEEKLY + AGE2 + AGE3 + AGE5 + AGE6 + 
+    ##     SMOKER + HISPANIC + BLACK + ASIAN + OTHRACE + FORMERMAR + 
+    ##     FAIRHLTH + POORHLTH + LOWED + SOMECOLL, data = analytic)
+    ## 
+    ## Residuals:
+    ##     Min      1Q  Median      3Q     Max 
+    ## -6.4969 -0.7677  0.0621  0.7014 17.6283 
+    ## 
+    ## Coefficients:
+    ##              Estimate Std. Error t value Pr(>|t|)    
+    ## (Intercept)  6.767737   0.021019 321.982  < 2e-16 ***
+    ## DRKWEEKLY    0.003133   0.013793   0.227 0.820319    
+    ## AGE2        -0.187693   0.033671  -5.574 2.50e-08 ***
+    ## AGE3        -0.129763   0.031498  -4.120 3.80e-05 ***
+    ## AGE5         0.213399   0.024495   8.712  < 2e-16 ***
+    ## AGE6         0.692084   0.020551  33.676  < 2e-16 ***
+    ## SMOKER      -0.202794   0.019577 -10.359  < 2e-16 ***
+    ## HISPANIC    -0.144845   0.034011  -4.259 2.06e-05 ***
+    ## BLACK       -0.135452   0.025576  -5.296 1.19e-07 ***
+    ## ASIAN       -0.471574   0.064233  -7.342 2.14e-13 ***
+    ## OTHRACE     -0.164386   0.027508  -5.976 2.30e-09 ***
+    ## FORMERMAR   -0.057804   0.015258  -3.789 0.000152 ***
+    ## FAIRHLTH    -0.170559   0.019181  -8.892  < 2e-16 ***
+    ## POORHLTH    -0.197709   0.028710  -6.887 5.78e-12 ***
+    ## LOWED        0.033909   0.016723   2.028 0.042591 *  
+    ## SOMECOLL    -0.061107   0.016291  -3.751 0.000176 ***
+    ## ---
+    ## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+    ## 
+    ## Residual standard error: 1.536 on 52968 degrees of freedom
+    ## Multiple R-squared:  0.05919,    Adjusted R-squared:  0.05892 
+    ## F-statistic: 222.2 on 15 and 52968 DF,  p-value: < 2.2e-16
+    ## 
+    ## 
+    ## > Model12 = lm(SLEPTIM2 ~ DRKWEEKLY + AGE2 + AGE3 + 
+    ## +     AGE5 + AGE6 + SMOKER + HISPANIC + BLACK + ASIAN + OTHRACE + 
+    ## +     FORMERMAR + FAIRHLTH + P .... [TRUNCATED] 
+    ## 
+    ## > summary(Model12)
+    ## 
+    ## Call:
+    ## lm(formula = SLEPTIM2 ~ DRKWEEKLY + AGE2 + AGE3 + AGE5 + AGE6 + 
+    ##     SMOKER + HISPANIC + BLACK + ASIAN + OTHRACE + FORMERMAR + 
+    ##     FAIRHLTH + POORHLTH + LOWED + SOMECOLL + INC1 + INC2 + INC3 + 
+    ##     INC4 + INC5 + INC6 + INC7, data = analytic)
+    ## 
+    ## Residuals:
+    ##     Min      1Q  Median      3Q     Max 
+    ## -6.4930 -0.7695  0.0564  0.6986 17.6388 
+    ## 
+    ## Coefficients:
+    ##              Estimate Std. Error t value Pr(>|t|)    
+    ## (Intercept)  6.770701   0.021404 316.323  < 2e-16 ***
+    ## DRKWEEKLY    0.001962   0.013877   0.141 0.887567    
+    ## AGE2        -0.189779   0.033749  -5.623 1.88e-08 ***
+    ## AGE3        -0.129998   0.031499  -4.127 3.68e-05 ***
+    ## AGE5         0.213435   0.024524   8.703  < 2e-16 ***
+    ## AGE6         0.688395   0.020652  33.333  < 2e-16 ***
+    ## SMOKER      -0.201529   0.019723 -10.218  < 2e-16 ***
+    ## HISPANIC    -0.144506   0.034034  -4.246 2.18e-05 ***
+    ## BLACK       -0.134231   0.025613  -5.241 1.61e-07 ***
+    ## ASIAN       -0.470684   0.064230  -7.328 2.37e-13 ***
+    ## OTHRACE     -0.162481   0.027549  -5.898 3.71e-09 ***
+    ## FORMERMAR   -0.059275   0.015600  -3.800 0.000145 ***
+    ## FAIRHLTH    -0.170912   0.019290  -8.860  < 2e-16 ***
+    ## POORHLTH    -0.195470   0.028962  -6.749 1.50e-11 ***
+    ## LOWED        0.031900   0.017293   1.845 0.065086 .  
+    ## SOMECOLL    -0.062914   0.016578  -3.795 0.000148 ***
+    ## INC1        -0.165128   0.052865  -3.124 0.001788 ** 
+    ## INC2         0.051163   0.039939   1.281 0.200183    
+    ## INC3        -0.004143   0.034210  -0.121 0.903601    
+    ## INC4        -0.003084   0.028089  -0.110 0.912581    
+    ## INC5         0.048809   0.024423   1.999 0.045667 *  
+    ## INC6        -0.001193   0.020935  -0.057 0.954546    
+    ## INC7        -0.013172   0.019450  -0.677 0.498258    
+    ## ---
+    ## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+    ## 
+    ## Residual standard error: 1.536 on 52961 degrees of freedom
+    ## Multiple R-squared:  0.05952,    Adjusted R-squared:  0.05913 
+    ## F-statistic: 152.3 on 22 and 52961 DF,  p-value: < 2.2e-16
+    ## 
+    ## 
+    ## > Model13 = lm(SLEPTIM2 ~ DRKWEEKLY + AGE2 + AGE3 + 
+    ## +     AGE5 + AGE6 + SMOKER + HISPANIC + BLACK + ASIAN + OTHRACE + 
+    ## +     FORMERMAR + FAIRHLTH + P .... [TRUNCATED] 
+    ## 
+    ## > summary(Model13)
+    ## 
+    ## Call:
+    ## lm(formula = SLEPTIM2 ~ DRKWEEKLY + AGE2 + AGE3 + AGE5 + AGE6 + 
+    ##     SMOKER + HISPANIC + BLACK + ASIAN + OTHRACE + FORMERMAR + 
+    ##     FAIRHLTH + POORHLTH + LOWED + SOMECOLL + INC1 + INC5, data = analytic)
+    ## 
+    ## Residuals:
+    ##     Min      1Q  Median      3Q     Max 
+    ## -6.4917 -0.7674  0.0538  0.7004 17.6265 
+    ## 
+    ## Coefficients:
+    ##              Estimate Std. Error t value Pr(>|t|)    
+    ## (Intercept)  6.767421   0.021017 321.998  < 2e-16 ***
+    ## DRKWEEKLY    0.002803   0.013803   0.203 0.839090    
+    ## AGE2        -0.190311   0.033679  -5.651 1.61e-08 ***
+    ## AGE3        -0.130304   0.031494  -4.137 3.52e-05 ***
+    ## AGE5         0.214452   0.024495   8.755  < 2e-16 ***
+    ## AGE6         0.688351   0.020575  33.456  < 2e-16 ***
+    ## SMOKER      -0.200046   0.019618 -10.197  < 2e-16 ***
+    ## HISPANIC    -0.144099   0.034013  -4.237 2.27e-05 ***
+    ## BLACK       -0.133569   0.025586  -5.220 1.79e-07 ***
+    ## ASIAN       -0.470982   0.064226  -7.333 2.28e-13 ***
+    ## OTHRACE     -0.161298   0.027523  -5.861 4.64e-09 ***
+    ## FORMERMAR   -0.057290   0.015304  -3.744 0.000182 ***
+    ## FAIRHLTH    -0.169656   0.019192  -8.840  < 2e-16 ***
+    ## POORHLTH    -0.192093   0.028759  -6.679 2.42e-11 ***
+    ## LOWED        0.033096   0.016819   1.968 0.049098 *  
+    ## SOMECOLL    -0.062925   0.016331  -3.853 0.000117 ***
+    ## INC1        -0.166119   0.051846  -3.204 0.001356 ** 
+    ## INC5         0.049382   0.022635   2.182 0.029139 *  
+    ## ---
+    ## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+    ## 
+    ## Residual standard error: 1.536 on 52966 degrees of freedom
+    ## Multiple R-squared:  0.05947,    Adjusted R-squared:  0.05917 
+    ## F-statistic:   197 on 17 and 52966 DF,  p-value: < 2.2e-16
+    ## 
+    ## 
+    ## > Model14 = lm(SLEPTIM2 ~ DRKWEEKLY + AGE2 + AGE3 + 
+    ## +     AGE5 + AGE6 + SMOKER + HISPANIC + BLACK + ASIAN + OTHRACE + 
+    ## +     FORMERMAR + FAIRHLTH + P .... [TRUNCATED] 
+    ## 
+    ## > summary(Model14)
+    ## 
+    ## Call:
+    ## lm(formula = SLEPTIM2 ~ DRKWEEKLY + AGE2 + AGE3 + AGE5 + AGE6 + 
+    ##     SMOKER + HISPANIC + BLACK + ASIAN + OTHRACE + FORMERMAR + 
+    ##     FAIRHLTH + POORHLTH + LOWED + SOMECOLL + INC1 + INC5 + OVWT + 
+    ##     OBESE, data = analytic)
+    ## 
+    ## Residuals:
+    ##     Min      1Q  Median      3Q     Max 
+    ## -6.5432 -0.7456  0.0733  0.6860 17.6708 
+    ## 
+    ## Coefficients:
+    ##              Estimate Std. Error t value Pr(>|t|)    
+    ## (Intercept)  6.861618   0.023985 286.077  < 2e-16 ***
+    ## DRKWEEKLY    0.002796   0.013805   0.203 0.839472    
+    ## AGE2        -0.201706   0.033689  -5.987 2.15e-09 ***
+    ## AGE3        -0.128387   0.031473  -4.079 4.53e-05 ***
+    ## AGE5         0.217244   0.024479   8.875  < 2e-16 ***
+    ## AGE6         0.678737   0.020612  32.929  < 2e-16 ***
+    ## SMOKER      -0.217959   0.019708 -11.060  < 2e-16 ***
+    ## HISPANIC    -0.148832   0.033993  -4.378 1.20e-05 ***
+    ## BLACK       -0.131374   0.025569  -5.138 2.79e-07 ***
+    ## ASIAN       -0.492063   0.064224  -7.662 1.87e-14 ***
+    ## OTHRACE     -0.161158   0.027503  -5.860 4.67e-09 ***
+    ## FORMERMAR   -0.062332   0.015304  -4.073 4.65e-05 ***
+    ## FAIRHLTH    -0.159352   0.019251  -8.278  < 2e-16 ***
+    ## POORHLTH    -0.186624   0.028773  -6.486 8.89e-11 ***
+    ## LOWED        0.039193   0.016823   2.330 0.019822 *  
+    ## SOMECOLL    -0.054610   0.016347  -3.341 0.000836 ***
+    ## INC1        -0.175240   0.051822  -3.382 0.000721 ***
+    ## INC5         0.048285   0.022619   2.135 0.032787 *  
+    ## OVWT        -0.097510   0.016601  -5.874 4.28e-09 ***
+    ## OBESE       -0.157321   0.017803  -8.837  < 2e-16 ***
+    ## ---
+    ## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+    ## 
+    ## Residual standard error: 1.535 on 52964 degrees of freedom
+    ## Multiple R-squared:  0.06087,    Adjusted R-squared:  0.06054 
+    ## F-statistic: 180.7 on 19 and 52964 DF,  p-value: < 2.2e-16
+    ## 
+    ## 
+    ## > Model15 = lm(SLEPTIM2 ~ DRKWEEKLY + AGE2 + AGE3 + 
+    ## +     AGE5 + AGE6 + SMOKER + HISPANIC + BLACK + ASIAN + OTHRACE + 
+    ## +     FORMERMAR + FAIRHLTH + P .... [TRUNCATED] 
+    ## 
+    ## > summary(Model15)
+    ## 
+    ## Call:
+    ## lm(formula = SLEPTIM2 ~ DRKWEEKLY + AGE2 + AGE3 + AGE5 + AGE6 + 
+    ##     SMOKER + HISPANIC + BLACK + ASIAN + OTHRACE + FORMERMAR + 
+    ##     FAIRHLTH + POORHLTH + LOWED + SOMECOLL + INC1 + INC5 + OVWT + 
+    ##     OBESE + NOEXER, data = analytic)
+    ## 
+    ## Residuals:
+    ##     Min      1Q  Median      3Q     Max 
+    ## -6.5535 -0.7536  0.0700  0.6949 17.6953 
+    ## 
+    ## Coefficients:
+    ##              Estimate Std. Error t value Pr(>|t|)    
+    ## (Intercept)  6.859012   0.023985 285.968  < 2e-16 ***
+    ## DRKWEEKLY   -0.001794   0.013832  -0.130 0.896824    
+    ## AGE2        -0.197823   0.033690  -5.872 4.33e-09 ***
+    ## AGE3        -0.127647   0.031466  -4.057 4.99e-05 ***
+    ## AGE5         0.213429   0.024485   8.717  < 2e-16 ***
+    ## AGE6         0.672436   0.020645  32.571  < 2e-16 ***
+    ## SMOKER      -0.224792   0.019750 -11.382  < 2e-16 ***
+    ## HISPANIC    -0.148190   0.033985  -4.360 1.30e-05 ***
+    ## BLACK       -0.132288   0.025564  -5.175 2.29e-07 ***
+    ## ASIAN       -0.490390   0.064210  -7.637 2.26e-14 ***
+    ## OTHRACE     -0.158988   0.027500  -5.781 7.45e-09 ***
+    ## FORMERMAR   -0.065246   0.015311  -4.261 2.04e-05 ***
+    ## FAIRHLTH    -0.172964   0.019435  -8.900  < 2e-16 ***
+    ## POORHLTH    -0.215031   0.029313  -7.336 2.24e-13 ***
+    ## LOWED        0.029625   0.016925   1.750 0.080069 .  
+    ## SOMECOLL    -0.059060   0.016367  -3.608 0.000308 ***
+    ## INC1        -0.176802   0.051811  -3.412 0.000644 ***
+    ## INC5         0.047191   0.022615   2.087 0.036916 *  
+    ## OVWT        -0.097666   0.016597  -5.885 4.02e-09 ***
+    ## OBESE       -0.163284   0.017838  -9.154  < 2e-16 ***
+    ## NOEXER       0.082889   0.016441   5.042 4.63e-07 ***
+    ## ---
+    ## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+    ## 
+    ## Residual standard error: 1.534 on 52963 degrees of freedom
+    ## Multiple R-squared:  0.06132,    Adjusted R-squared:  0.06097 
+    ## F-statistic:   173 on 20 and 52963 DF,  p-value: < 2.2e-16
+    ## 
+    ## 
+    ## > Model16 = lm(SLEPTIM2 ~ DRKWEEKLY + AGE2 + AGE3 + 
+    ## +     AGE5 + AGE6 + SMOKER + HISPANIC + BLACK + ASIAN + OTHRACE + 
+    ## +     FORMERMAR + FAIRHLTH + P .... [TRUNCATED] 
+    ## 
+    ## > summary(Model16)
+    ## 
+    ## Call:
+    ## lm(formula = SLEPTIM2 ~ DRKWEEKLY + AGE2 + AGE3 + AGE5 + AGE6 + 
+    ##     SMOKER + HISPANIC + BLACK + ASIAN + OTHRACE + FORMERMAR + 
+    ##     FAIRHLTH + POORHLTH + SOMECOLL + INC1 + INC5 + OVWT + OBESE + 
+    ##     NOEXER, data = analytic)
+    ## 
+    ## Residuals:
+    ##     Min      1Q  Median      3Q     Max 
+    ## -6.5542 -0.7524  0.0801  0.6945 17.6956 
+    ## 
+    ## Coefficients:
+    ##              Estimate Std. Error t value Pr(>|t|)    
+    ## (Intercept)  6.868446   0.023372 293.871  < 2e-16 ***
+    ## DRKWEEKLY    0.000406   0.013775   0.029 0.976486    
+    ## AGE2        -0.197315   0.033689  -5.857 4.74e-09 ***
+    ## AGE3        -0.129940   0.031440  -4.133 3.59e-05 ***
+    ## AGE5         0.213295   0.024486   8.711  < 2e-16 ***
+    ## AGE6         0.671729   0.020641  32.543  < 2e-16 ***
+    ## SMOKER      -0.220570   0.019602 -11.252  < 2e-16 ***
+    ## HISPANIC    -0.147412   0.033983  -4.338 1.44e-05 ***
+    ## BLACK       -0.132122   0.025564  -5.168 2.37e-07 ***
+    ## ASIAN       -0.492390   0.064201  -7.670 1.76e-14 ***
+    ## OTHRACE     -0.158405   0.027498  -5.760 8.43e-09 ***
+    ## FORMERMAR   -0.063914   0.015293  -4.179 2.93e-05 ***
+    ## FAIRHLTH    -0.170899   0.019400  -8.809  < 2e-16 ***
+    ## POORHLTH    -0.213062   0.029292  -7.274 3.55e-13 ***
+    ## SOMECOLL    -0.072491   0.014457  -5.014 5.34e-07 ***
+    ## INC1        -0.171928   0.051737  -3.323 0.000891 ***
+    ## INC5         0.050949   0.022513   2.263 0.023634 *  
+    ## OVWT        -0.097216   0.016595  -5.858 4.71e-09 ***
+    ## OBESE       -0.162212   0.017828  -9.099  < 2e-16 ***
+    ## NOEXER       0.086116   0.016337   5.271 1.36e-07 ***
+    ## ---
+    ## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+    ## 
+    ## Residual standard error: 1.534 on 52964 degrees of freedom
+    ## Multiple R-squared:  0.06127,    Adjusted R-squared:  0.06093 
+    ## F-statistic: 181.9 on 19 and 52964 DF,  p-value: < 2.2e-16
+    ## 
+    ## 
+    ## > Model17 = lm(SLEPTIM2 ~ DRKWEEKLY + AGE2 + AGE3 + 
+    ## +     AGE5 + AGE6 + SMOKER + HISPANIC + BLACK + ASIAN + OTHRACE + 
+    ## +     MALE + FORMERMAR + FAIRH .... [TRUNCATED] 
+    ## 
+    ## > summary(Model17)
+    ## 
+    ## Call:
+    ## lm(formula = SLEPTIM2 ~ DRKWEEKLY + AGE2 + AGE3 + AGE5 + AGE6 + 
+    ##     SMOKER + HISPANIC + BLACK + ASIAN + OTHRACE + MALE + FORMERMAR + 
+    ##     FAIRHLTH + POORHLTH + SOMECOLL + INC1 + INC5 + OVWT + OBESE + 
+    ##     NOEXER, data = analytic)
+    ## 
+    ## Residuals:
+    ##     Min      1Q  Median      3Q     Max 
+    ## -6.5825 -0.7582  0.0859  0.6960 17.7017 
+    ## 
+    ## Coefficients:
+    ##              Estimate Std. Error t value Pr(>|t|)    
+    ## (Intercept)  6.905085   0.029907 230.888  < 2e-16 ***
+    ## DRKWEEKLY   -0.000671   0.013785  -0.049 0.961176    
+    ## AGE2        -0.197784   0.033689  -5.871 4.36e-09 ***
+    ## AGE3        -0.131702   0.031452  -4.187 2.83e-05 ***
+    ## AGE5         0.213871   0.024487   8.734  < 2e-16 ***
+    ## AGE6         0.677390   0.020841  32.502  < 2e-16 ***
+    ## SMOKER      -0.219241   0.019613 -11.178  < 2e-16 ***
+    ## HISPANIC    -0.147936   0.033983  -4.353 1.34e-05 ***
+    ## BLACK       -0.134927   0.025603  -5.270 1.37e-07 ***
+    ## ASIAN       -0.492579   0.064199  -7.673 1.71e-14 ***
+    ## OTHRACE     -0.158684   0.027498  -5.771 7.94e-09 ***
+    ## MALE        -0.045507   0.023176  -1.964 0.049588 *  
+    ## FORMERMAR   -0.065703   0.015319  -4.289 1.80e-05 ***
+    ## FAIRHLTH    -0.170306   0.019401  -8.778  < 2e-16 ***
+    ## POORHLTH    -0.212104   0.029296  -7.240 4.54e-13 ***
+    ## SOMECOLL    -0.072879   0.014458  -5.041 4.65e-07 ***
+    ## INC1        -0.172326   0.051736  -3.331 0.000866 ***
+    ## INC5         0.050833   0.022513   2.258 0.023949 *  
+    ## OVWT        -0.093842   0.016684  -5.625 1.87e-08 ***
+    ## OBESE       -0.159372   0.017886  -8.910  < 2e-16 ***
+    ## NOEXER       0.085844   0.016338   5.254 1.49e-07 ***
+    ## ---
+    ## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+    ## 
+    ## Residual standard error: 1.534 on 52963 degrees of freedom
+    ## Multiple R-squared:  0.06134,    Adjusted R-squared:  0.06098 
+    ## F-statistic:   173 on 20 and 52963 DF,  p-value: < 2.2e-16
+    ## 
+    ## 
+    ## > Model18 = lm(SLEPTIM2 ~ DRKWEEKLY + AGE2 + AGE3 + 
+    ## +     AGE5 + AGE6 + SMOKER + HISPANIC + BLACK + ASIAN + OTHRACE + 
+    ## +     MALE + NEVERMAR + FORMER .... [TRUNCATED] 
+    ## 
+    ## > summary(Model18)
+    ## 
+    ## Call:
+    ## lm(formula = SLEPTIM2 ~ DRKWEEKLY + AGE2 + AGE3 + AGE5 + AGE6 + 
+    ##     SMOKER + HISPANIC + BLACK + ASIAN + OTHRACE + MALE + NEVERMAR + 
+    ##     FORMERMAR + FAIRHLTH + POORHLTH + SOMECOLL + INC1 + INC5 + 
+    ##     OVWT + OBESE + NOEXER, data = analytic)
+    ## 
+    ## Residuals:
+    ##     Min      1Q  Median      3Q     Max 
+    ## -6.5833 -0.7580  0.0850  0.6963 17.6997 
+    ## 
+    ## Coefficients:
+    ##               Estimate Std. Error t value Pr(>|t|)    
+    ## (Intercept)  6.9062714  0.0299310 230.740  < 2e-16 ***
+    ## DRKWEEKLY   -0.0006545  0.0137854  -0.047 0.962133    
+    ## AGE2        -0.1977435  0.0336891  -5.870 4.39e-09 ***
+    ## AGE3        -0.1313338  0.0314539  -4.175 2.98e-05 ***
+    ## AGE5         0.2139262  0.0244869   8.736  < 2e-16 ***
+    ## AGE6         0.6770248  0.0208445  32.480  < 2e-16 ***
+    ## SMOKER      -0.2182933  0.0196369 -11.116  < 2e-16 ***
+    ## HISPANIC    -0.1475228  0.0339858  -4.341 1.42e-05 ***
+    ## BLACK       -0.1333943  0.0256506  -5.200 2.00e-07 ***
+    ## ASIAN       -0.4929707  0.0642006  -7.679 1.64e-14 ***
+    ## OTHRACE     -0.1582315  0.0275020  -5.753 8.79e-09 ***
+    ## MALE        -0.0457411  0.0231769  -1.974 0.048436 *  
+    ## NEVERMAR    -0.0501871  0.0510052  -0.984 0.325139    
+    ## FORMERMAR   -0.0670924  0.0153842  -4.361 1.30e-05 ***
+    ## FAIRHLTH    -0.1699000  0.0194058  -8.755  < 2e-16 ***
+    ## POORHLTH    -0.2116006  0.0293002  -7.222 5.20e-13 ***
+    ## SOMECOLL    -0.0726533  0.0144599  -5.024 5.07e-07 ***
+    ## INC1        -0.1712614  0.0517472  -3.310 0.000935 ***
+    ## INC5         0.0511454  0.0225147   2.272 0.023112 *  
+    ## OVWT        -0.0940632  0.0166852  -5.638 1.73e-08 ***
+    ## OBESE       -0.1594876  0.0178866  -8.917  < 2e-16 ***
+    ## NOEXER       0.0861944  0.0163414   5.275 1.34e-07 ***
+    ## ---
+    ## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+    ## 
+    ## Residual standard error: 1.534 on 52962 degrees of freedom
+    ## Multiple R-squared:  0.06136,    Adjusted R-squared:  0.06098 
+    ## F-statistic: 164.9 on 21 and 52962 DF,  p-value: < 2.2e-16
+    ## 
+    ## 
+    ## > Model19 = lm(SLEPTIM2 ~ DRKWEEKLY + AGE2 + AGE3 + 
+    ## +     AGE5 + AGE6 + SMOKER + HISPANIC + BLACK + ASIAN + OTHRACE + 
+    ## +     MALE + FORMERMAR + FAIRH .... [TRUNCATED] 
+    ## 
+    ## > summary(Model19)
+    ## 
+    ## Call:
+    ## lm(formula = SLEPTIM2 ~ DRKWEEKLY + AGE2 + AGE3 + AGE5 + AGE6 + 
+    ##     SMOKER + HISPANIC + BLACK + ASIAN + OTHRACE + MALE + FORMERMAR + 
+    ##     FAIRHLTH + POORHLTH + NOPLAN + SOMECOLL + INC1 + INC5 + OVWT + 
+    ##     OBESE + NOEXER, data = analytic)
+    ## 
+    ## Residuals:
+    ##     Min      1Q  Median      3Q     Max 
+    ## -6.5827 -0.7571  0.0856  0.6960 17.7038 
+    ## 
+    ## Coefficients:
+    ##               Estimate Std. Error t value Pr(>|t|)    
+    ## (Intercept)  6.9033824  0.0299595 230.424  < 2e-16 ***
+    ## DRKWEEKLY   -0.0008159  0.0137862  -0.059 0.952809    
+    ## AGE2        -0.1983497  0.0336943  -5.887 3.96e-09 ***
+    ## AGE3        -0.1315696  0.0314520  -4.183 2.88e-05 ***
+    ## AGE5         0.2142934  0.0244908   8.750  < 2e-16 ***
+    ## AGE6         0.6792691  0.0209334  32.449  < 2e-16 ***
+    ## SMOKER      -0.2203760  0.0196491 -11.216  < 2e-16 ***
+    ## HISPANIC    -0.1485219  0.0339887  -4.370 1.25e-05 ***
+    ## BLACK       -0.1354312  0.0256087  -5.288 1.24e-07 ***
+    ## ASIAN       -0.4924812  0.0641994  -7.671 1.73e-14 ***
+    ## OTHRACE     -0.1589097  0.0274992  -5.779 7.57e-09 ***
+    ## MALE        -0.0458771  0.0231789  -1.979 0.047792 *  
+    ## FORMERMAR   -0.0661161  0.0153254  -4.314 1.61e-05 ***
+    ## FAIRHLTH    -0.1704552  0.0194021  -8.785  < 2e-16 ***
+    ## POORHLTH    -0.2120660  0.0292957  -7.239 4.59e-13 ***
+    ## NOPLAN       0.0324746  0.0339123   0.958 0.338266    
+    ## SOMECOLL    -0.0729809  0.0144585  -5.048 4.49e-07 ***
+    ## INC1        -0.1757664  0.0518605  -3.389 0.000701 ***
+    ## INC5         0.0503667  0.0225178   2.237 0.025307 *  
+    ## OVWT        -0.0935269  0.0166869  -5.605 2.10e-08 ***
+    ## OBESE       -0.1589660  0.0178912  -8.885  < 2e-16 ***
+    ## NOEXER       0.0853233  0.0163466   5.220 1.80e-07 ***
+    ## ---
+    ## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+    ## 
+    ## Residual standard error: 1.534 on 52962 degrees of freedom
+    ## Multiple R-squared:  0.06135,    Adjusted R-squared:  0.06098 
+    ## F-statistic: 164.9 on 21 and 52962 DF,  p-value: < 2.2e-16
+    ## 
+    ## 
+    ## > Model20 = lm(SLEPTIM2 ~ DRKWEEKLY + DRKMONTHLY + AGE2 + 
+    ## +     AGE3 + AGE5 + AGE6 + SMOKER + HISPANIC + BLACK + ASIAN + 
+    ## +     OTHRACE + MALE + FORM .... [TRUNCATED] 
+    ## 
+    ## > summary(Model20)
+    ## 
+    ## Call:
+    ## lm(formula = SLEPTIM2 ~ DRKWEEKLY + DRKMONTHLY + AGE2 + AGE3 + 
+    ##     AGE5 + AGE6 + SMOKER + HISPANIC + BLACK + ASIAN + OTHRACE + 
+    ##     MALE + FORMERMAR + FAIRHLTH + POORHLTH + SOMECOLL + INC1 + 
+    ##     INC5 + OVWT + OBESE + NOEXER, data = analytic)
+    ## 
+    ## Residuals:
+    ##     Min      1Q  Median      3Q     Max 
+    ## -6.5796 -0.7575  0.0792  0.6980 17.7040 
+    ## 
+    ## Coefficients:
+    ##              Estimate Std. Error t value Pr(>|t|)    
+    ## (Intercept)  6.911820   0.032961 209.698  < 2e-16 ***
+    ## DRKWEEKLY   -0.007331   0.019435  -0.377 0.706032    
+    ## DRKMONTHLY  -0.009489   0.019519  -0.486 0.626883    
+    ## AGE2        -0.197727   0.033690  -5.869 4.41e-09 ***
+    ## AGE3        -0.131635   0.031452  -4.185 2.85e-05 ***
+    ## AGE5         0.213800   0.024487   8.731  < 2e-16 ***
+    ## AGE6         0.677252   0.020843  32.493  < 2e-16 ***
+    ## SMOKER      -0.219201   0.019614 -11.176  < 2e-16 ***
+    ## HISPANIC    -0.148082   0.033985  -4.357 1.32e-05 ***
+    ## BLACK       -0.134928   0.025603  -5.270 1.37e-07 ***
+    ## ASIAN       -0.492701   0.064200  -7.674 1.69e-14 ***
+    ## OTHRACE     -0.158623   0.027499  -5.768 8.05e-09 ***
+    ## MALE        -0.045674   0.023178  -1.971 0.048781 *  
+    ## FORMERMAR   -0.065760   0.015320  -4.292 1.77e-05 ***
+    ## FAIRHLTH    -0.170146   0.019404  -8.768  < 2e-16 ***
+    ## POORHLTH    -0.211962   0.029297  -7.235 4.72e-13 ***
+    ## SOMECOLL    -0.072829   0.014459  -5.037 4.74e-07 ***
+    ## INC1        -0.172485   0.051737  -3.334 0.000857 ***
+    ## INC5         0.050804   0.022513   2.257 0.024033 *  
+    ## OVWT        -0.093752   0.016685  -5.619 1.93e-08 ***
+    ## OBESE       -0.159099   0.017895  -8.891  < 2e-16 ***
+    ## NOEXER       0.085851   0.016338   5.255 1.49e-07 ***
+    ## ---
+    ## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+    ## 
+    ## Residual standard error: 1.534 on 52962 degrees of freedom
+    ## Multiple R-squared:  0.06134,    Adjusted R-squared:  0.06097 
+    ## F-statistic: 164.8 on 21 and 52962 DF,  p-value: < 2.2e-16
+    ## 
+    ## 
+    ## > Model21 = lm(SLEPTIM2 ~ DRKWEEKLY + DRKMONTHLY + AGE2 + 
+    ## +     AGE3 + AGE5 + AGE6 + SMOKER + HISPANIC + BLACK + ASIAN + 
+    ## +     OTHRACE + MALE + FORM .... [TRUNCATED] 
+    ## 
+    ## > summary(Model21)
+    ## 
+    ## Call:
+    ## lm(formula = SLEPTIM2 ~ DRKWEEKLY + DRKMONTHLY + AGE2 + AGE3 + 
+    ##     AGE5 + AGE6 + SMOKER + HISPANIC + BLACK + ASIAN + OTHRACE + 
+    ##     MALE + FORMERMAR + FAIRHLTH + POORHLTH + LOWED + SOMECOLL + 
+    ##     INC1 + INC5 + OVWT + OBESE + NOEXER, data = analytic)
+    ## 
+    ## Residuals:
+    ##     Min      1Q  Median      3Q     Max 
+    ## -6.5737 -0.7511  0.0681  0.6957 17.7042 
+    ## 
+    ## Coefficients:
+    ##              Estimate Std. Error t value Pr(>|t|)    
+    ## (Intercept)  6.904546   0.033174 208.133  < 2e-16 ***
+    ## DRKWEEKLY   -0.009776   0.019476  -0.502 0.615708    
+    ## DRKMONTHLY  -0.009355   0.019519  -0.479 0.631722    
+    ## AGE2        -0.198335   0.033690  -5.887 3.96e-09 ***
+    ## AGE3        -0.129249   0.031476  -4.106 4.03e-05 ***
+    ## AGE5         0.214000   0.024487   8.739  < 2e-16 ***
+    ## AGE6         0.678548   0.020854  32.539  < 2e-16 ***
+    ## SMOKER      -0.223768   0.019755 -11.327  < 2e-16 ***
+    ## HISPANIC    -0.148991   0.033987  -4.384 1.17e-05 ***
+    ## BLACK       -0.135364   0.025604  -5.287 1.25e-07 ***
+    ## ASIAN       -0.490497   0.064209  -7.639 2.22e-14 ***
+    ## OTHRACE     -0.159296   0.027500  -5.793 6.97e-09 ***
+    ## MALE        -0.049759   0.023274  -2.138 0.032521 *  
+    ## FORMERMAR   -0.067399   0.015343  -4.393 1.12e-05 ***
+    ## FAIRHLTH    -0.172387   0.019438  -8.868  < 2e-16 ***
+    ## POORHLTH    -0.214063   0.029317  -7.302 2.88e-13 ***
+    ## LOWED        0.032884   0.016995   1.935 0.053007 .  
+    ## SOMECOLL    -0.057955   0.016375  -3.539 0.000402 ***
+    ## INC1        -0.177929   0.051812  -3.434 0.000595 ***
+    ## INC5         0.046622   0.022616   2.062 0.039259 *  
+    ## OVWT        -0.093949   0.016685  -5.631 1.80e-08 ***
+    ## OBESE       -0.160038   0.017901  -8.940  < 2e-16 ***
+    ## NOEXER       0.082245   0.016443   5.002 5.70e-07 ***
+    ## ---
+    ## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+    ## 
+    ## Residual standard error: 1.534 on 52961 degrees of freedom
+    ## Multiple R-squared:  0.06141,    Adjusted R-squared:  0.06102 
+    ## F-statistic: 157.5 on 22 and 52961 DF,  p-value: < 2.2e-16
+    ## 
+    ## 
+    ## > Model22 = lm(SLEPTIM2 ~ DRKWEEKLY + DRKMONTHLY + AGE2 + 
+    ## +     AGE3 + AGE5 + AGE6 + SMOKER + HISPANIC + BLACK + ASIAN + 
+    ## +     OTHRACE + MALE + FORM .... [TRUNCATED] 
+    ## 
+    ## > summary(Model22)
+    ## 
+    ## Call:
+    ## lm(formula = SLEPTIM2 ~ DRKWEEKLY + DRKMONTHLY + AGE2 + AGE3 + 
+    ##     AGE5 + AGE6 + SMOKER + HISPANIC + BLACK + ASIAN + OTHRACE + 
+    ##     MALE + FORMERMAR + FAIRHLTH + POORHLTH + LOWED + SOMECOLL + 
+    ##     INC1 + INC2 + INC5 + OVWT + OBESE + NOEXER, data = analytic)
+    ## 
+    ## Residuals:
+    ##     Min      1Q  Median      3Q     Max 
+    ## -6.5736 -0.7513  0.0704  0.6981 17.7059 
+    ## 
+    ## Coefficients:
+    ##              Estimate Std. Error t value Pr(>|t|)    
+    ## (Intercept)  6.904709   0.033174 208.136  < 2e-16 ***
+    ## DRKWEEKLY   -0.010447   0.019484  -0.536 0.591827    
+    ## DRKMONTHLY  -0.009252   0.019519  -0.474 0.635509    
+    ## AGE2        -0.198532   0.033690  -5.893 3.82e-09 ***
+    ## AGE3        -0.129236   0.031475  -4.106 4.03e-05 ***
+    ## AGE5         0.212980   0.024503   8.692  < 2e-16 ***
+    ## AGE6         0.678179   0.020856  32.517  < 2e-16 ***
+    ## SMOKER      -0.225136   0.019790 -11.376  < 2e-16 ***
+    ## HISPANIC    -0.149387   0.033989  -4.395 1.11e-05 ***
+    ## BLACK       -0.135989   0.025609  -5.310 1.10e-07 ***
+    ## ASIAN       -0.490078   0.064210  -7.632 2.34e-14 ***
+    ## OTHRACE     -0.160181   0.027511  -5.823 5.83e-09 ***
+    ## MALE        -0.049424   0.023275  -2.123 0.033721 *  
+    ## FORMERMAR   -0.069189   0.015420  -4.487 7.24e-06 ***
+    ## FAIRHLTH    -0.173431   0.019459  -8.913  < 2e-16 ***
+    ## POORHLTH    -0.216673   0.029403  -7.369 1.74e-13 ***
+    ## LOWED        0.031457   0.017040   1.846 0.064882 .  
+    ## SOMECOLL    -0.058580   0.016383  -3.576 0.000350 ***
+    ## INC1        -0.174209   0.051911  -3.356 0.000792 ***
+    ## INC2         0.044837   0.038622   1.161 0.245680    
+    ## INC5         0.049011   0.022709   2.158 0.030914 *  
+    ## OVWT        -0.093581   0.016688  -5.608 2.06e-08 ***
+    ## OBESE       -0.159719   0.017903  -8.921  < 2e-16 ***
+    ## NOEXER       0.081955   0.016445   4.984 6.26e-07 ***
+    ## ---
+    ## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+    ## 
+    ## Residual standard error: 1.534 on 52960 degrees of freedom
+    ## Multiple R-squared:  0.06143,    Adjusted R-squared:  0.06103 
+    ## F-statistic: 150.7 on 23 and 52960 DF,  p-value: < 2.2e-16
+    ## 
+    ## 
+    ## > Model23 = lm(SLEPTIM2 ~ DRKWEEKLY + DRKMONTHLY + AGE2 + 
+    ## +     AGE3 + AGE5 + AGE6 + SMOKER + HISPANIC + BLACK + ASIAN + 
+    ## +     OTHRACE + MALE + FORM .... [TRUNCATED] 
+    ## 
+    ## > summary(Model23)
+    ## 
+    ## Call:
+    ## lm(formula = SLEPTIM2 ~ DRKWEEKLY + DRKMONTHLY + AGE2 + AGE3 + 
+    ##     AGE5 + AGE6 + SMOKER + HISPANIC + BLACK + ASIAN + OTHRACE + 
+    ##     MALE + FORMERMAR + FAIRHLTH + POORHLTH + LOWED + SOMECOLL + 
+    ##     INC1 + INC3 + INC5 + OVWT + OBESE + NOEXER, data = analytic)
+    ## 
+    ## Residuals:
+    ##     Min      1Q  Median      3Q     Max 
+    ## -6.5739 -0.7513  0.0672  0.6946 17.7034 
+    ## 
+    ## Coefficients:
+    ##              Estimate Std. Error t value Pr(>|t|)    
+    ## (Intercept)  6.904590   0.033174 208.132  < 2e-16 ***
+    ## DRKWEEKLY   -0.009520   0.019484  -0.489 0.625126    
+    ## DRKMONTHLY  -0.009362   0.019519  -0.480 0.631484    
+    ## AGE2        -0.198232   0.033691  -5.884 4.03e-09 ***
+    ## AGE3        -0.129299   0.031476  -4.108 4.00e-05 ***
+    ## AGE5         0.214171   0.024490   8.745  < 2e-16 ***
+    ## AGE6         0.678676   0.020856  32.541  < 2e-16 ***
+    ## SMOKER      -0.223497   0.019764 -11.308  < 2e-16 ***
+    ## HISPANIC    -0.148682   0.033995  -4.374 1.22e-05 ***
+    ## BLACK       -0.135077   0.025612  -5.274 1.34e-07 ***
+    ## ASIAN       -0.490598   0.064210  -7.641 2.20e-14 ***
+    ## OTHRACE     -0.158991   0.027509  -5.780 7.53e-09 ***
+    ## MALE        -0.049925   0.023277  -2.145 0.031973 *  
+    ## FORMERMAR   -0.066790   0.015405  -4.336 1.46e-05 ***
+    ## FAIRHLTH    -0.171929   0.019466  -8.832  < 2e-16 ***
+    ## POORHLTH    -0.213331   0.029364  -7.265 3.78e-13 ***
+    ## LOWED        0.033627   0.017079   1.969 0.048969 *  
+    ## SOMECOLL    -0.057577   0.016397  -3.511 0.000446 ***
+    ## INC1        -0.179377   0.051917  -3.455 0.000551 ***
+    ## INC3        -0.014427   0.032800  -0.440 0.660056    
+    ## INC5         0.045578   0.022740   2.004 0.045043 *  
+    ## OVWT        -0.094052   0.016686  -5.636 1.74e-08 ***
+    ## OBESE       -0.160160   0.017904  -8.946  < 2e-16 ***
+    ## NOEXER       0.082400   0.016447   5.010 5.46e-07 ***
+    ## ---
+    ## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+    ## 
+    ## Residual standard error: 1.534 on 52960 degrees of freedom
+    ## Multiple R-squared:  0.06141,    Adjusted R-squared:  0.06101 
+    ## F-statistic: 150.7 on 23 and 52960 DF,  p-value: < 2.2e-16
+    ## 
+    ## 
+    ## > Model24 = lm(SLEPTIM2 ~ DRKWEEKLY + DRKMONTHLY + AGE2 + 
+    ## +     AGE3 + AGE5 + AGE6 + SMOKER + HISPANIC + BLACK + ASIAN + 
+    ## +     OTHRACE + MALE + FORM .... [TRUNCATED] 
+    ## 
+    ## > summary(Model24)
+    ## 
+    ## Call:
+    ## lm(formula = SLEPTIM2 ~ DRKWEEKLY + DRKMONTHLY + AGE2 + AGE3 + 
+    ##     AGE5 + AGE6 + SMOKER + HISPANIC + BLACK + ASIAN + OTHRACE + 
+    ##     MALE + FORMERMAR + FAIRHLTH + POORHLTH + LOWED + SOMECOLL + 
+    ##     INC1 + INC4 + INC5 + OVWT + OBESE + NOEXER, data = analytic)
+    ## 
+    ## Residuals:
+    ##     Min      1Q  Median      3Q     Max 
+    ## -6.5740 -0.7514  0.0671  0.6954 17.7034 
+    ## 
+    ## Coefficients:
+    ##              Estimate Std. Error t value Pr(>|t|)    
+    ## (Intercept)  6.904686   0.033176 208.125  < 2e-16 ***
+    ## DRKWEEKLY   -0.009517   0.019485  -0.488 0.625262    
+    ## DRKMONTHLY  -0.009386   0.019519  -0.481 0.630601    
+    ## AGE2        -0.198099   0.033695  -5.879 4.15e-09 ***
+    ## AGE3        -0.129297   0.031476  -4.108 4.00e-05 ***
+    ## AGE5         0.214012   0.024487   8.740  < 2e-16 ***
+    ## AGE6         0.678745   0.020859  32.540  < 2e-16 ***
+    ## SMOKER      -0.223473   0.019767 -11.306  < 2e-16 ***
+    ## HISPANIC    -0.148749   0.033992  -4.376 1.21e-05 ***
+    ## BLACK       -0.135179   0.025608  -5.279 1.30e-07 ***
+    ## ASIAN       -0.490465   0.064209  -7.639 2.23e-14 ***
+    ## OTHRACE     -0.159154   0.027502  -5.787 7.21e-09 ***
+    ## MALE        -0.049819   0.023274  -2.141 0.032317 *  
+    ## FORMERMAR   -0.066886   0.015389  -4.346 1.39e-05 ***
+    ## FAIRHLTH    -0.172069   0.019453  -8.846  < 2e-16 ***
+    ## POORHLTH    -0.213718   0.029328  -7.287 3.21e-13 ***
+    ## LOWED        0.033720   0.017106   1.971 0.048696 *  
+    ## SOMECOLL    -0.057514   0.016407  -3.506 0.000456 ***
+    ## INC1        -0.179439   0.051931  -3.455 0.000550 ***
+    ## INC4        -0.011458   0.026574  -0.431 0.666333    
+    ## INC5         0.045390   0.022796   1.991 0.046467 *  
+    ## OVWT        -0.094053   0.016687  -5.636 1.74e-08 ***
+    ## OBESE       -0.160160   0.017904  -8.946  < 2e-16 ***
+    ## NOEXER       0.082464   0.016451   5.013 5.39e-07 ***
+    ## ---
+    ## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+    ## 
+    ## Residual standard error: 1.534 on 52960 degrees of freedom
+    ## Multiple R-squared:  0.06141,    Adjusted R-squared:  0.061 
+    ## F-statistic: 150.7 on 23 and 52960 DF,  p-value: < 2.2e-16
+    ## 
+    ## 
+    ## > Model25 = lm(SLEPTIM2 ~ DRKWEEKLY + DRKMONTHLY + AGE2 + 
+    ## +     AGE3 + AGE5 + AGE6 + SMOKER + HISPANIC + BLACK + ASIAN + 
+    ## +     OTHRACE + MALE + FORM .... [TRUNCATED] 
+    ## 
+    ## > summary(Model25)
+    ## 
+    ## Call:
+    ## lm(formula = SLEPTIM2 ~ DRKWEEKLY + DRKMONTHLY + AGE2 + AGE3 + 
+    ##     AGE5 + AGE6 + SMOKER + HISPANIC + BLACK + ASIAN + OTHRACE + 
+    ##     MALE + FORMERMAR + FAIRHLTH + POORHLTH + LOWED + SOMECOLL + 
+    ##     INC1 + INC5 + INC6 + OVWT + OBESE + NOEXER, data = analytic)
+    ## 
+    ## Residuals:
+    ##     Min      1Q  Median      3Q     Max 
+    ## -6.5739 -0.7511  0.0680  0.6956 17.7041 
+    ## 
+    ## Coefficients:
+    ##               Estimate Std. Error t value Pr(>|t|)    
+    ## (Intercept)  6.9046069  0.0332049 207.939  < 2e-16 ***
+    ## DRKWEEKLY   -0.0097628  0.0194780  -0.501 0.616217    
+    ## DRKMONTHLY  -0.0093506  0.0195191  -0.479 0.631905    
+    ## AGE2        -0.1982820  0.0337131  -5.881 4.09e-09 ***
+    ## AGE3        -0.1292419  0.0314763  -4.106 4.03e-05 ***
+    ## AGE5         0.2140092  0.0244881   8.739  < 2e-16 ***
+    ## AGE6         0.6785945  0.0208822  32.496  < 2e-16 ***
+    ## SMOKER      -0.2237516  0.0197587 -11.324  < 2e-16 ***
+    ## HISPANIC    -0.1489875  0.0339875  -4.384 1.17e-05 ***
+    ## BLACK       -0.1353621  0.0256041  -5.287 1.25e-07 ***
+    ## ASIAN       -0.4905058  0.0642097  -7.639 2.22e-14 ***
+    ## OTHRACE     -0.1593085  0.0275018  -5.793 6.97e-09 ***
+    ## MALE        -0.0497655  0.0232744  -2.138 0.032505 *  
+    ## FORMERMAR   -0.0673798  0.0153492  -4.390 1.14e-05 ***
+    ## FAIRHLTH    -0.1723832  0.0194387  -8.868  < 2e-16 ***
+    ## POORHLTH    -0.2140894  0.0293234  -7.301 2.90e-13 ***
+    ## LOWED        0.0329356  0.0170375   1.933 0.053226 .  
+    ## SOMECOLL    -0.0578972  0.0164305  -3.524 0.000426 ***
+    ## INC1        -0.1780761  0.0519262  -3.429 0.000605 ***
+    ## INC5         0.0464697  0.0228947   2.030 0.042390 *  
+    ## INC6        -0.0008333  0.0194295  -0.043 0.965792    
+    ## OVWT        -0.0939481  0.0166848  -5.631 1.80e-08 ***
+    ## OBESE       -0.1600375  0.0179014  -8.940  < 2e-16 ***
+    ## NOEXER       0.0822499  0.0164437   5.002 5.69e-07 ***
+    ## ---
+    ## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+    ## 
+    ## Residual standard error: 1.534 on 52960 degrees of freedom
+    ## Multiple R-squared:  0.06141,    Adjusted R-squared:  0.061 
+    ## F-statistic: 150.7 on 23 and 52960 DF,  p-value: < 2.2e-16
+    ## 
+    ## 
+    ## > Model26 = lm(SLEPTIM2 ~ DRKWEEKLY + DRKMONTHLY + AGE2 + 
+    ## +     AGE3 + AGE5 + AGE6 + SMOKER + HISPANIC + BLACK + ASIAN + 
+    ## +     OTHRACE + MALE + FORM .... [TRUNCATED] 
+    ## 
+    ## > summary(Model26)
+    ## 
+    ## Call:
+    ## lm(formula = SLEPTIM2 ~ DRKWEEKLY + DRKMONTHLY + AGE2 + AGE3 + 
+    ##     AGE5 + AGE6 + SMOKER + HISPANIC + BLACK + ASIAN + OTHRACE + 
+    ##     MALE + FORMERMAR + FAIRHLTH + POORHLTH + LOWED + SOMECOLL + 
+    ##     INC1 + INC5 + OVWT + OBESE + NOEXER, data = analytic)
+    ## 
+    ## Residuals:
+    ##     Min      1Q  Median      3Q     Max 
+    ## -6.5737 -0.7511  0.0681  0.6957 17.7042 
+    ## 
+    ## Coefficients:
+    ##              Estimate Std. Error t value Pr(>|t|)    
+    ## (Intercept)  6.904546   0.033174 208.133  < 2e-16 ***
+    ## DRKWEEKLY   -0.009776   0.019476  -0.502 0.615708    
+    ## DRKMONTHLY  -0.009355   0.019519  -0.479 0.631722    
+    ## AGE2        -0.198335   0.033690  -5.887 3.96e-09 ***
+    ## AGE3        -0.129249   0.031476  -4.106 4.03e-05 ***
+    ## AGE5         0.214000   0.024487   8.739  < 2e-16 ***
+    ## AGE6         0.678548   0.020854  32.539  < 2e-16 ***
+    ## SMOKER      -0.223768   0.019755 -11.327  < 2e-16 ***
+    ## HISPANIC    -0.148991   0.033987  -4.384 1.17e-05 ***
+    ## BLACK       -0.135364   0.025604  -5.287 1.25e-07 ***
+    ## ASIAN       -0.490497   0.064209  -7.639 2.22e-14 ***
+    ## OTHRACE     -0.159296   0.027500  -5.793 6.97e-09 ***
+    ## MALE        -0.049759   0.023274  -2.138 0.032521 *  
+    ## FORMERMAR   -0.067399   0.015343  -4.393 1.12e-05 ***
+    ## FAIRHLTH    -0.172387   0.019438  -8.868  < 2e-16 ***
+    ## POORHLTH    -0.214063   0.029317  -7.302 2.88e-13 ***
+    ## LOWED        0.032884   0.016995   1.935 0.053007 .  
+    ## SOMECOLL    -0.057955   0.016375  -3.539 0.000402 ***
+    ## INC1        -0.177929   0.051812  -3.434 0.000595 ***
+    ## INC5         0.046622   0.022616   2.062 0.039259 *  
+    ## OVWT        -0.093949   0.016685  -5.631 1.80e-08 ***
+    ## OBESE       -0.160038   0.017901  -8.940  < 2e-16 ***
+    ## NOEXER       0.082245   0.016443   5.002 5.70e-07 ***
+    ## ---
+    ## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+    ## 
+    ## Residual standard error: 1.534 on 52961 degrees of freedom
+    ## Multiple R-squared:  0.06141,    Adjusted R-squared:  0.06102 
+    ## F-statistic: 157.5 on 22 and 52961 DF,  p-value: < 2.2e-16
+    ## 
+    ## 
+    ## > FinalLinearRegressionModel = Model26
+    ## 
+    ## > summary(FinalLinearRegressionModel)
+    ## 
+    ## Call:
+    ## lm(formula = SLEPTIM2 ~ DRKWEEKLY + DRKMONTHLY + AGE2 + AGE3 + 
+    ##     AGE5 + AGE6 + SMOKER + HISPANIC + BLACK + ASIAN + OTHRACE + 
+    ##     MALE + FORMERMAR + FAIRHLTH + POORHLTH + LOWED + SOMECOLL + 
+    ##     INC1 + INC5 + OVWT + OBESE + NOEXER, data = analytic)
+    ## 
+    ## Residuals:
+    ##     Min      1Q  Median      3Q     Max 
+    ## -6.5737 -0.7511  0.0681  0.6957 17.7042 
+    ## 
+    ## Coefficients:
+    ##              Estimate Std. Error t value Pr(>|t|)    
+    ## (Intercept)  6.904546   0.033174 208.133  < 2e-16 ***
+    ## DRKWEEKLY   -0.009776   0.019476  -0.502 0.615708    
+    ## DRKMONTHLY  -0.009355   0.019519  -0.479 0.631722    
+    ## AGE2        -0.198335   0.033690  -5.887 3.96e-09 ***
+    ## AGE3        -0.129249   0.031476  -4.106 4.03e-05 ***
+    ## AGE5         0.214000   0.024487   8.739  < 2e-16 ***
+    ## AGE6         0.678548   0.020854  32.539  < 2e-16 ***
+    ## SMOKER      -0.223768   0.019755 -11.327  < 2e-16 ***
+    ## HISPANIC    -0.148991   0.033987  -4.384 1.17e-05 ***
+    ## BLACK       -0.135364   0.025604  -5.287 1.25e-07 ***
+    ## ASIAN       -0.490497   0.064209  -7.639 2.22e-14 ***
+    ## OTHRACE     -0.159296   0.027500  -5.793 6.97e-09 ***
+    ## MALE        -0.049759   0.023274  -2.138 0.032521 *  
+    ## FORMERMAR   -0.067399   0.015343  -4.393 1.12e-05 ***
+    ## FAIRHLTH    -0.172387   0.019438  -8.868  < 2e-16 ***
+    ## POORHLTH    -0.214063   0.029317  -7.302 2.88e-13 ***
+    ## LOWED        0.032884   0.016995   1.935 0.053007 .  
+    ## SOMECOLL    -0.057955   0.016375  -3.539 0.000402 ***
+    ## INC1        -0.177929   0.051812  -3.434 0.000595 ***
+    ## INC5         0.046622   0.022616   2.062 0.039259 *  
+    ## OVWT        -0.093949   0.016685  -5.631 1.80e-08 ***
+    ## OBESE       -0.160038   0.017901  -8.940  < 2e-16 ***
+    ## NOEXER       0.082245   0.016443   5.002 5.70e-07 ***
+    ## ---
+    ## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+    ## 
+    ## Residual standard error: 1.534 on 52961 degrees of freedom
+    ## Multiple R-squared:  0.06141,    Adjusted R-squared:  0.06102 
+    ## F-statistic: 157.5 on 22 and 52961 DF,  p-value: < 2.2e-16
+    ## 
+    ## 
+    ## > library(devtools)
+    ## 
+    ## > library(broom)
+    ## 
+    ## > Tidy_FinalModel <- tidy(FinalLinearRegressionModel)
+    ## 
+    ## > write.csv(Tidy_FinalModel, file = "./data/models/FinalLinearRegressionModel.csv")
+    ## 
+    ## > library(arm)
+
+    ## Loading required package: Matrix
+
+    ## Loading required package: lme4
+
+    ## 
+    ## arm (Version 1.10-1, built: 2018-4-12)
+
+    ## Working directory is D:/RProjects/github/BRFSS
+
+    ## 
+    ## Attaching package: 'arm'
+
+    ## The following object is masked from 'package:gtools':
+    ## 
+    ##     logit
+
+    ## 
+    ## > coefplot(FinalLinearRegressionModel)
+
+![](README_files/figure-gfm/stepwiseRegression-1.png)<!-- -->
+
+    ## 
+    ## > layout(matrix(c(1, 2, 3, 4), 2, 2))
+    ## 
+    ## > plot(FinalLinearRegressionModel, main = "Final Linear Regression Model")
+
+![](README_files/figure-gfm/stepwiseRegression-2.png)<!-- -->
+
+    ## 
+    ## > library(gvlma)
+    ## 
+    ## > gvmodel <- gvlma(FinalLinearRegressionModel)
+    ## 
+    ## > summary(gvmodel)
+    ## 
+    ## Call:
+    ## lm(formula = SLEPTIM2 ~ DRKWEEKLY + DRKMONTHLY + AGE2 + AGE3 + 
+    ##     AGE5 + AGE6 + SMOKER + HISPANIC + BLACK + ASIAN + OTHRACE + 
+    ##     MALE + FORMERMAR + FAIRHLTH + POORHLTH + LOWED + SOMECOLL + 
+    ##     INC1 + INC5 + OVWT + OBESE + NOEXER, data = analytic)
+    ## 
+    ## Residuals:
+    ##     Min      1Q  Median      3Q     Max 
+    ## -6.5737 -0.7511  0.0681  0.6957 17.7042 
+    ## 
+    ## Coefficients:
+    ##              Estimate Std. Error t value Pr(>|t|)    
+    ## (Intercept)  6.904546   0.033174 208.133  < 2e-16 ***
+    ## DRKWEEKLY   -0.009776   0.019476  -0.502 0.615708    
+    ## DRKMONTHLY  -0.009355   0.019519  -0.479 0.631722    
+    ## AGE2        -0.198335   0.033690  -5.887 3.96e-09 ***
+    ## AGE3        -0.129249   0.031476  -4.106 4.03e-05 ***
+    ## AGE5         0.214000   0.024487   8.739  < 2e-16 ***
+    ## AGE6         0.678548   0.020854  32.539  < 2e-16 ***
+    ## SMOKER      -0.223768   0.019755 -11.327  < 2e-16 ***
+    ## HISPANIC    -0.148991   0.033987  -4.384 1.17e-05 ***
+    ## BLACK       -0.135364   0.025604  -5.287 1.25e-07 ***
+    ## ASIAN       -0.490497   0.064209  -7.639 2.22e-14 ***
+    ## OTHRACE     -0.159296   0.027500  -5.793 6.97e-09 ***
+    ## MALE        -0.049759   0.023274  -2.138 0.032521 *  
+    ## FORMERMAR   -0.067399   0.015343  -4.393 1.12e-05 ***
+    ## FAIRHLTH    -0.172387   0.019438  -8.868  < 2e-16 ***
+    ## POORHLTH    -0.214063   0.029317  -7.302 2.88e-13 ***
+    ## LOWED        0.032884   0.016995   1.935 0.053007 .  
+    ## SOMECOLL    -0.057955   0.016375  -3.539 0.000402 ***
+    ## INC1        -0.177929   0.051812  -3.434 0.000595 ***
+    ## INC5         0.046622   0.022616   2.062 0.039259 *  
+    ## OVWT        -0.093949   0.016685  -5.631 1.80e-08 ***
+    ## OBESE       -0.160038   0.017901  -8.940  < 2e-16 ***
+    ## NOEXER       0.082245   0.016443   5.002 5.70e-07 ***
+    ## ---
+    ## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+    ## 
+    ## Residual standard error: 1.534 on 52961 degrees of freedom
+    ## Multiple R-squared:  0.06141,    Adjusted R-squared:  0.06102 
+    ## F-statistic: 157.5 on 22 and 52961 DF,  p-value: < 2.2e-16
+    ## 
+    ## 
+    ## ASSESSMENT OF THE LINEAR MODEL ASSUMPTIONS
+    ## USING THE GLOBAL TEST ON 4 DEGREES-OF-FREEDOM:
+    ## Level of Significance =  0.05 
+    ## 
+    ## Call:
+    ##  gvlma(x = FinalLinearRegressionModel) 
+    ## 
+    ##                        Value   p-value                   Decision
+    ## Global Stat        1.573e+05 0.000e+00 Assumptions NOT satisfied!
+    ## Skewness           5.594e+03 0.000e+00 Assumptions NOT satisfied!
+    ## Kurtosis           1.517e+05 0.000e+00 Assumptions NOT satisfied!
+    ## Link Function      3.719e+01 1.073e-09 Assumptions NOT satisfied!
+    ## Heteroscedasticity 7.171e-03 9.325e-01    Assumptions acceptable.
+    ## 
+    ## > coefplot(Model2)
+
+![](README_files/figure-gfm/stepwiseRegression-3.png)<!-- -->
+
+    ## 
+    ## > layout(matrix(c(1, 2, 3, 4), 2, 2))
+    ## 
+    ## > plot(Model2, main = "Regression Model2")
+
+![](README_files/figure-gfm/stepwiseRegression-4.png)<!-- -->
+
+    ## 
+    ## > gvmodel <- gvlma(Model2)
+    ## 
+    ## > summary(gvmodel)
+    ## 
+    ## Call:
+    ## lm(formula = SLEPTIM2 ~ DRKMONTHLY + DRKWEEKLY + MALE + AGE2 + 
+    ##     AGE3 + AGE4 + AGE5 + AGE6, data = analytic)
+    ## 
+    ## Residuals:
+    ##     Min      1Q  Median      3Q     Max 
+    ## -6.4157 -0.7979  0.1790  0.6640 17.5522 
+    ## 
+    ## Coefficients:
+    ##             Estimate Std. Error t value Pr(>|t|)    
+    ## (Intercept)  6.70784    0.05265 127.405  < 2e-16 ***
+    ## DRKMONTHLY  -0.01869    0.01961  -0.953 0.340535    
+    ## DRKWEEKLY   -0.04181    0.01932  -2.164 0.030438 *  
+    ## MALE        -0.05656    0.02308  -2.451 0.014252 *  
+    ## AGE2        -0.20347    0.05470  -3.720 0.000199 ***
+    ## AGE3        -0.14780    0.05340  -2.768 0.005647 ** 
+    ## AGE4        -0.00522    0.05069  -0.103 0.917994    
+    ## AGE5         0.18841    0.04955   3.802 0.000143 ***
+    ## AGE6         0.72653    0.04769  15.235  < 2e-16 ***
+    ## ---
+    ## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+    ## 
+    ## Residual standard error: 1.542 on 52975 degrees of freedom
+    ## Multiple R-squared:  0.05099,    Adjusted R-squared:  0.05085 
+    ## F-statistic: 355.8 on 8 and 52975 DF,  p-value: < 2.2e-16
+    ## 
+    ## 
+    ## ASSESSMENT OF THE LINEAR MODEL ASSUMPTIONS
+    ## USING THE GLOBAL TEST ON 4 DEGREES-OF-FREEDOM:
+    ## Level of Significance =  0.05 
+    ## 
+    ## Call:
+    ##  gvlma(x = Model2) 
+    ## 
+    ##                        Value   p-value                   Decision
+    ## Global Stat        1.416e+05 0.000e+00 Assumptions NOT satisfied!
+    ## Skewness           4.244e+03 0.000e+00 Assumptions NOT satisfied!
+    ## Kurtosis           1.374e+05 0.000e+00 Assumptions NOT satisfied!
+    ## Link Function      2.306e+01 1.567e-06 Assumptions NOT satisfied!
+    ## Heteroscedasticity 1.536e-02 9.014e-01    Assumptions acceptable.

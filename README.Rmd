@@ -82,7 +82,6 @@ To demonstrate a descriptive analysis with a categorical outcome variable the fo
 - [235_Table 1 ttests.R](./235_Table 1 ttests.R)
 - [240_Table 1 ANOVAs.R](./240_Table 1 ANOVAs.R)
 
-
 5. **Final Table 1 for Categorical Outcome Variable**
 6. **Final Table 1 for Continuous Outcome Variable**
 
@@ -241,3 +240,25 @@ source("240_Table 1 ANOVAs.R", echo = TRUE)
 ![Continuous Table 1 PNF](./visuals/continuous_table1.png "Continuous Table 1")
 
 
+## Regression Analyses
+
+### Regression of Hours Slept (SLEPTIM3) and Alcohol Grouping (ALCGRP)
+
+```{r sleepRegression, echo=TRUE, message=TRUE, warning=TRUE}
+source("245_Diagnostic plots.R", echo = TRUE)
+
+```
+
+### Development and Testing of Regression Models 1 and 2
+
+```{r regressionModels, echo=TRUE, message=TRUE, warning=TRUE}
+source("250_Models 1 and 2 linear regression.R", echo = TRUE)
+
+```
+
+### Stepwise Regression of Candidates for Model 3
+
+```{r stepwiseRegression, echo=TRUE, message=TRUE, warning=TRUE}
+source("255_Linear regression models.R", echo = TRUE)
+
+```

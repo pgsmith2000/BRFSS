@@ -1,140 +1,170 @@
 # read in analytic table
 analytic <- read.csv(file="./data/analytic.csv", header=TRUE, sep=",")
 
-summary(Model2)
-
 # Start with Model 2 with the not significant covariates removed
 Model3 = lm(SLEPTIM2 ~ DRKWEEKLY + AGE2 + AGE3 +AGE5 + AGE6, data=analytic) 
 summary(Model3) 
 
 # add smoker
-Model4 = lm(SLEPTIM2 ~ DRKWEEKLY + AGE2 + AGE3 + AGE5 
-            + AGE6 + SMOKER, data=analytic) 
+Model4 = lm(SLEPTIM2 ~ DRKWEEKLY + AGE2 + AGE3 + AGE5 + AGE6 + 
+              SMOKER, data=analytic) 
 summary(Model4) 
 
 # smoker is significant
 # add Hispanic
-Model5 = lm(SLEPTIM2 ~ DRKWEEKLY + AGE2 + AGE3 + AGE5 
-            + AGE6 + SMOKER + HISPANIC, data=analytic)  
+Model5 = lm(SLEPTIM2 ~ DRKWEEKLY + AGE2 + AGE3 + AGE5 + AGE6 + 
+              SMOKER + HISPANIC, data=analytic)  
 summary(Model5) 
 
 # Hispanic significant
 # add race vars
-Model6 = lm(SLEPTIM2 ~ DRKWEEKLY + AGE2 + AGE3 + AGE5 
-            + AGE6 + SMOKER + HISPANIC + BLACK + ASIAN 
-            + OTHRACE, data=analytic)
+Model6 = lm(SLEPTIM2 ~ DRKWEEKLY + AGE2 + AGE3 + AGE5 + AGE6 + 
+              SMOKER + HISPANIC + BLACK + ASIAN + OTHRACE, data=analytic)
 summary(Model6) 
 
 # Race vars significant
 # marital status
-Model7 = lm(SLEPTIM2 ~ DRKWEEKLY + AGE2 + AGE3 + AGE5 
-            + AGE6 + SMOKER + HISPANIC + BLACK + ASIAN 
-            + OTHRACE + NEVERMAR + FORMERMAR, data=analytic) 
+Model7 = lm(SLEPTIM2 ~ DRKWEEKLY + AGE2 + AGE3 + AGE5 + AGE6 + 
+              SMOKER + HISPANIC + BLACK + ASIAN + OTHRACE + 
+              NEVERMAR + FORMERMAR, data=analytic) 
 summary(Model7)
 
 # Formerly Married significant
-# drop NEVERMAR
-Model8 = lm(SLEPTIM2 ~ DRKWEEKLY + AGE2 + AGE3 + AGE5 + AGE6 + SMOKER 
-            + HISPANIC + BLACK + ASIAN + OTHRACE + FORMERMAR + FAIRHLTH 
-            + POORHLTH, data=analytic) 
+# drop NEVERMAR; add Health
+Model8 = lm(SLEPTIM2 ~ DRKWEEKLY + AGE2 + AGE3 + AGE5 + AGE6 + 
+              SMOKER + HISPANIC + BLACK + ASIAN + OTHRACE + 
+              FORMERMAR + FAIRHLTH + POORHLTH, data=analytic) 
 summary(Model8)
 
 # Gen Hlth significant
 # health plan
-Model9 = lm(SLEPTIM2 ~ DRKWEEKLY + AGE2 + AGE3 + AGE5 + AGE6 + SMOKER 
-            + HISPANIC + BLACK + ASIAN + OTHRACE + NEVERMAR + FORMERMAR 
-            + FAIRHLTH + POORHLTH + NOPLAN, data=analytic) 
+Model9 = lm(SLEPTIM2 ~ DRKWEEKLY + AGE2 + AGE3 + AGE5 + AGE6 + 
+              SMOKER + HISPANIC + BLACK + ASIAN + OTHRACE + 
+              NEVERMAR + FORMERMAR + FAIRHLTH + POORHLTH + NOPLAN, data=analytic) 
 summary(Model9)
 
 # take out NOPLAN
 # try education
-Model10 = lm(SLEPTIM2 ~ DRKWEEKLY + AGE2 + AGE3 + AGE5 + AGE6 + SMOKER 
-             + HISPANIC + BLACK + ASIAN + OTHRACE + FORMERMAR 
-             + FAIRHLTH + POORHLTH, data=analytic) 
+Model10 = lm(SLEPTIM2 ~ DRKWEEKLY + AGE2 + AGE3 + AGE5 + AGE6 + 
+               SMOKER + HISPANIC + BLACK + ASIAN + OTHRACE + 
+               NEVERMAR + FORMERMAR + FAIRHLTH + POORHLTH + 
+               LOWED + SOMECOLL, data=analytic) 
 summary(Model10)
 
-#take out LOWED
-
-Model11 = lm(SLEPTIM2 ~ DRKWEEKLY + AGE2 + AGE3 + AGE5 + AGE6 + SMOKER 
-             + HISPANIC + BLACK + ASIAN + OTHRACE + FORMERMAR 
-             + FAIRHLTH + POORHLTH + LOWED + SOMECOLL, data=analytic) 
+#take out NEVERMAR
+Model11 = lm(SLEPTIM2 ~ DRKWEEKLY + AGE2 + AGE3 + AGE5 + AGE6 + 
+               SMOKER + HISPANIC + BLACK + ASIAN + OTHRACE + 
+               FORMERMAR + FAIRHLTH + POORHLTH + 
+               LOWED + SOMECOLL, data=analytic) 
 summary(Model11)
 
 #add income
-
-Model12 = lm(SLEPTIM2 ~ DRKWEEKLY + AGE2 + AGE3 + AGE5 + AGE6 + SMOKER 
-             + HISPANIC + BLACK + ASIAN + OTHRACE + FORMERMAR 
-             + FAIRHLTH + POORHLTH + LOWED + SOMECOLL + INC1 + INC2 
-             + INC3 + INC4 + INC5 + INC6 + INC7, data=analytic) 
+Model12 = lm(SLEPTIM2 ~ DRKWEEKLY + AGE2 + AGE3 + AGE5 + AGE6 + 
+               SMOKER + HISPANIC + BLACK + ASIAN + OTHRACE + 
+               FORMERMAR + FAIRHLTH + POORHLTH + LOWED + SOMECOLL + 
+               INC1 + INC2 + INC3 + INC4 + INC5 + INC6 + INC7, data=analytic) 
 summary(Model12)
 
-# remove married
-Model13 = lm(SLEPTIM2 ~ DRKWEEKLY + AGE2 + AGE3 + AGE5 + AGE6 + SMOKER 
-             + HISPANIC + BLACK + ASIAN + OTHRACE + FORMERMAR 
-             + FAIRHLTH + POORHLTH + LOWED + SOMECOLL + INC5, data=analytic) 
+#add income
+Model13 = lm(SLEPTIM2 ~ DRKWEEKLY + AGE2 + AGE3 + AGE5 + AGE6 + 
+               SMOKER + HISPANIC + BLACK + ASIAN + OTHRACE + 
+               FORMERMAR + FAIRHLTH + POORHLTH + LOWED + SOMECOLL + 
+               INC1 + INC5, data=analytic) 
 summary(Model13)
 
 #add BMI
-Model14 = lm(SLEPTIM2 ~ DRKWEEKLY + AGE2 + AGE3 + AGE5 + AGE6 + SMOKER 
-             + HISPANIC + BLACK + ASIAN + OTHRACE + FORMERMAR 
-             + FAIRHLTH + POORHLTH + LOWED + SOMECOLL + INC5 + UNDWT 
-             + OVWT + OBESE, data=analytic) 
+Model14 = lm(SLEPTIM2 ~ DRKWEEKLY + AGE2 + AGE3 + AGE5 + AGE6 + 
+               SMOKER + HISPANIC + BLACK + ASIAN + OTHRACE + 
+               FORMERMAR + FAIRHLTH + POORHLTH + LOWED + SOMECOLL + 
+               INC1 + INC5 + OVWT + OBESE, data=analytic) 
 summary(Model14)
 
-# take out UNDWT
-Model15 = lm(SLEPTIM2 ~ DRKWEEKLY + AGE2 + AGE3 + AGE5 + AGE6 + SMOKER 
-             + HISPANIC + BLACK + ASIAN + OTHRACE + FORMERMAR 
-             + FAIRHLTH + POORHLTH + LOWED + SOMECOLL + INC5 + OVWT 
-             + OBESE, data=analytic) 
+# add exercise
+Model15 = lm(SLEPTIM2 ~ DRKWEEKLY + AGE2 + AGE3 + AGE5 + AGE6 + 
+               SMOKER + HISPANIC + BLACK + ASIAN + OTHRACE + 
+               FORMERMAR + FAIRHLTH + POORHLTH + LOWED + SOMECOLL + 
+               INC1 + INC5 + OVWT + OBESE + NOEXER, data=analytic) 
 summary(Model15)
 
-# add exercise
-Model16 = lm(SLEPTIM2 ~ DRKWEEKLY + AGE2 + AGE3 + AGE5 + AGE6 + SMOKER 
-             + HISPANIC + BLACK + ASIAN + OTHRACE + FORMERMAR 
-             + FAIRHLTH + POORHLTH + LOWED + SOMECOLL + INC5 + OVWT 
-             + OBESE + NOEXER, data=analytic) 
+# take out LOWED
+Model16 = lm(SLEPTIM2 ~ DRKWEEKLY + AGE2 + AGE3 + AGE5 + AGE6 + 
+               SMOKER + HISPANIC + BLACK + ASIAN + OTHRACE + 
+               FORMERMAR + FAIRHLTH + POORHLTH + SOMECOLL + 
+               INC1 + INC5 + OVWT + OBESE + NOEXER, data=analytic)  
 summary(Model16)
 
-# take out LOWED
-Model17 = lm(SLEPTIM2 ~ DRKWEEKLY + AGE2 + AGE3 + AGE5 + AGE6 + SMOKER 
-             + HISPANIC + BLACK + ASIAN + OTHRACE + FORMERMAR 
-             + FAIRHLTH + POORHLTH + SOMECOLL + INC5 + OVWT 
-             + OBESE + NOEXER, data=analytic) 
+# add MALE back
+Model17 = lm(SLEPTIM2 ~ DRKWEEKLY + AGE2 + AGE3 + AGE5 + AGE6 + 
+               SMOKER + HISPANIC + BLACK + ASIAN + OTHRACE + MALE +
+               FORMERMAR + FAIRHLTH + POORHLTH + SOMECOLL + 
+               INC1 + INC5 + OVWT + OBESE + NOEXER, data=analytic)   
 summary(Model17)
 
-# add MALE back
-Model18 = lm(SLEPTIM2 ~ DRKWEEKLY + AGE2 + AGE3 + AGE5 + AGE6 + SMOKER 
-             + HISPANIC + BLACK + ASIAN + OTHRACE + FORMERMAR 
-             + FAIRHLTH + POORHLTH + SOMECOLL + INC5 + OVWT 
-             + OBESE + NOEXER + MALE, data=analytic) 
+# add NEVERMAR back
+Model18 = lm(SLEPTIM2 ~ DRKWEEKLY + AGE2 + AGE3 + AGE5 + AGE6 + 
+               SMOKER + HISPANIC + BLACK + ASIAN + OTHRACE + MALE +
+               NEVERMAR + FORMERMAR + FAIRHLTH + POORHLTH + SOMECOLL + 
+               INC1 + INC5 + OVWT + OBESE + NOEXER, data=analytic)  
 summary(Model18)
 
-# add NEVERMAR back
-Model19 = lm(SLEPTIM2 ~ DRKWEEKLY + AGE2 + AGE3 + AGE5 + AGE6 + SMOKER 
-             + HISPANIC + BLACK + ASIAN + OTHRACE + FORMERMAR 
-             + FAIRHLTH + POORHLTH + SOMECOLL + INC5 + OVWT 
-             + OBESE + NOEXER + MALE + NEVERMAR, data=analytic)  
+# remove NEVERMAR and add back NOPLAN
+Model19 = lm(SLEPTIM2 ~ DRKWEEKLY + AGE2 + AGE3 + AGE5 + AGE6 + 
+               SMOKER + HISPANIC + BLACK + ASIAN + OTHRACE + MALE +
+               FORMERMAR + FAIRHLTH + POORHLTH + NOPLAN + SOMECOLL + 
+               INC1 + INC5 + OVWT + OBESE + NOEXER, data=analytic)
 summary(Model19)
 
-# remove NEVERMAR and add back NOPLAN
-Model20 = lm(SLEPTIM2 ~ DRKWEEKLY + AGE2 + AGE3 + AGE5 + AGE6 + SMOKER 
-             + HISPANIC + BLACK + ASIAN + OTHRACE + FORMERMAR 
-             + FAIRHLTH + POORHLTH + SOMECOLL + INC5 + OVWT 
-             + OBESE + NOEXER + MALE + NOPLAN, data=analytic)
+# take out NOPLAN; try to add DRKMONTHLY back
+Model20 = lm(SLEPTIM2 ~ DRKWEEKLY + DRKMONTHLY + AGE2 + AGE3 + AGE5 + AGE6 + 
+               SMOKER + HISPANIC + BLACK + ASIAN + OTHRACE + MALE +
+               FORMERMAR + FAIRHLTH + POORHLTH + SOMECOLL + 
+               INC1 + INC5 + OVWT + OBESE + NOEXER, data=analytic)
 summary(Model20)
 
-# Model18 looks best; try to add DRKMONTHLY back
-Model21 = lm(SLEPTIM2 ~ DRKWEEKLY + AGE2 + AGE3 + AGE5 + AGE6 + SMOKER 
-             + HISPANIC + BLACK + ASIAN + OTHRACE + FORMERMAR 
-             + FAIRHLTH + SOMECOLL + INC5 + OVWT + OBESE + NOEXER 
-             + MALE + DRKMONTHLY, data=analytic) 
+# add back LOWED
+Model21 = lm(SLEPTIM2 ~ DRKWEEKLY + DRKMONTHLY + AGE2 + AGE3 + AGE5 + AGE6 + 
+               SMOKER + HISPANIC + BLACK + ASIAN + OTHRACE + MALE +
+               FORMERMAR + FAIRHLTH + POORHLTH + LOWED + SOMECOLL + 
+               INC1 + INC5 + OVWT + OBESE + NOEXER, data=analytic)
 summary(Model21)
 
-### FINAL MODEL
-FinalLinearRegressionModel = lm(SLEPTIM2 ~ DRKWEEKLY + AGE2 + AGE3 
-     + AGE5 + AGE6 + SMOKER + HISPANIC + BLACK + ASIAN + OTHRACE 
-     + FORMERMAR + FAIRHLTH + POORHLTH + SOMECOLL + INC5 + OVWT 
-     + OBESE + NOEXER + MALE, data=analytic)  
+# add back INC2
+Model22 = lm(SLEPTIM2 ~ DRKWEEKLY + DRKMONTHLY + AGE2 + AGE3 + AGE5 + AGE6 + 
+               SMOKER + HISPANIC + BLACK + ASIAN + OTHRACE + MALE +
+               FORMERMAR + FAIRHLTH + POORHLTH + LOWED + SOMECOLL + 
+               INC1 + INC2 + INC5 + OVWT + OBESE + NOEXER, data=analytic)
+summary(Model22)
+
+
+### drop INC2; try INC3
+Model23 = lm(SLEPTIM2 ~ DRKWEEKLY + DRKMONTHLY + AGE2 + AGE3 + AGE5 + AGE6 + 
+               SMOKER + HISPANIC + BLACK + ASIAN + OTHRACE + MALE +
+               FORMERMAR + FAIRHLTH + POORHLTH + LOWED + SOMECOLL + 
+               INC1 + INC3 + INC5 + OVWT + OBESE + NOEXER, data=analytic)
+summary(Model23)
+
+### drop INC3; add INC4
+Model24 = lm(SLEPTIM2 ~ DRKWEEKLY + DRKMONTHLY + AGE2 + AGE3 + AGE5 + AGE6 + 
+               SMOKER + HISPANIC + BLACK + ASIAN + OTHRACE + MALE +
+               FORMERMAR + FAIRHLTH + POORHLTH + LOWED + SOMECOLL + 
+               INC1 + INC4 + INC5 + OVWT + OBESE + NOEXER, data=analytic)
+summary(Model24)
+
+### drop INC4; add INC6
+Model25 = lm(SLEPTIM2 ~ DRKWEEKLY + DRKMONTHLY + AGE2 + AGE3 + AGE5 + AGE6 + 
+               SMOKER + HISPANIC + BLACK + ASIAN + OTHRACE + MALE +
+               FORMERMAR + FAIRHLTH + POORHLTH + LOWED + SOMECOLL + 
+               INC1 + INC5 + INC6 + OVWT + OBESE + NOEXER, data=analytic)
+summary(Model25)
+
+# drop INC6
+Model26 = lm(SLEPTIM2 ~ DRKWEEKLY + DRKMONTHLY + AGE2 + AGE3 + AGE5 + AGE6 + 
+               SMOKER + HISPANIC + BLACK + ASIAN + OTHRACE + MALE +
+               FORMERMAR + FAIRHLTH + POORHLTH + LOWED + SOMECOLL + 
+               INC1 + INC5 + OVWT + OBESE + NOEXER, data=analytic)
+summary(Model26)
+
+FinalLinearRegressionModel = Model26
 summary(FinalLinearRegressionModel)
 
 # output as CSV
