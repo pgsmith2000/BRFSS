@@ -44,6 +44,9 @@ Paul G. Smith
             2](#development-and-testing-of-regression-models-1-and-2)
           - [Stepwise Regression of Candidates for Model
             3](#stepwise-regression-of-candidates-for-model-3)
+          - [Final Table of Stepwise Regression Results for Models 1, 2,
+            and
+            3](#final-table-of-stepwise-regression-results-for-models-1-2-and-3)
 
 # Sample Descriptive Analysis Using Publicly Available Healthcare Data
 
@@ -3337,6 +3340,8 @@ source("255_Linear regression models.R", echo = TRUE)
     ## Kurtosis           1.374e+05 0.000e+00 Assumptions NOT satisfied!
     ## Link Function      2.306e+01 1.567e-06 Assumptions NOT satisfied!
     ## Heteroscedasticity 1.536e-02 9.014e-01    Assumptions acceptable.
+
+### Final Table of Stepwise Regression Results for Models 1, 2, and 3
 
 ![Final Linear Regression
 Models](./visuals/linear_regression_models.png)
