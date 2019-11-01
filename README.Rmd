@@ -262,4 +262,7 @@ source("250_Models 1 and 2 linear regression.R", echo = TRUE)
 source("255_Linear regression models.R", echo = TRUE)
 
 ```
+
+### Final Table of Stepwise Regression Results for Models 1, 2, and 3
+
 ![Final Linear Regression Models](./visuals/linear_regression_models.png)
