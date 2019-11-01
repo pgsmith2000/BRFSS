@@ -3337,3 +3337,6 @@ source("255_Linear regression models.R", echo = TRUE)
     ## Kurtosis           1.374e+05 0.000e+00 Assumptions NOT satisfied!
     ## Link Function      2.306e+01 1.567e-06 Assumptions NOT satisfied!
     ## Heteroscedasticity 1.536e-02 9.014e-01    Assumptions acceptable.
+
+![Final Linear Regression
+Models](./visuals/linear_regression_models.png)
